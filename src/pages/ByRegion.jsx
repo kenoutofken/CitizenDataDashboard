@@ -7,28 +7,29 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function ByRegion() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("data/dummy.json") // ✅ must live in /public
-      .then((response) => {
-        // Filter and transform your data for the chart
-        const chartData = response.data
-          .filter((d) => d.periodlabel === "2016") // optional filter
+    fetch("../data/dummy.json")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        return res.json();
+      })
+      .then((json) => {
+        const chartData = json
+          .filter((d) => d.periodlabel === "2016") // filter optional
           .map((d) => ({
-            name: d.geographyname, // label on Y axis
-            value: d.actualvalue, // value for the bar
+            name: d.geographyname, // y-axis label
+            value: d.actualvalue, // bar value
           }));
         setData(chartData);
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      .catch((err) => console.error("Error fetching data:", err));
   }, []);
 
   return (
