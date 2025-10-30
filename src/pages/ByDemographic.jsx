@@ -30,12 +30,12 @@ export default function ByDemographic() {
   }, []);
 
   return (
-    <div className="flex justify-center overflow-y-auto h-screen pt-12">
+    <div className="flex justify-center overflow-y-auto h-[calc(100vh-6rem)] min-h-[800px] pt-12">
       <ResponsiveContainer width="80%" height="70%">
         <BarChart
           data={data}
           layout="vertical"
-          margin={{ top: 16, right: 16, bottom: 16, left: 120 }}
+          margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" domain={[0, "dataMax + 5"]} />
