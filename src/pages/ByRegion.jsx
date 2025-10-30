@@ -71,7 +71,7 @@ export default function ByRegion() {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
+      <div className="flex h-[calc(100vh-4rem)] pt-12 px-12">
         <div className="w-1/2 h-full min-h-[800px]">
           <MapContainer
             className="h-full w-full"
@@ -93,7 +93,11 @@ export default function ByRegion() {
                 })}
                 onEachFeature={(feature, layer) => {
                   const name = feature.properties?.geographyname || "Unnamed";
-                  layer.bindTooltip(name, { permanent: false });
+                  const value = feature.properties?.actualvalue || "N/A";
+                  layer.bindTooltip(
+                    `<strong>${name}</strong><br/>Value: ${value}`,
+                    { permanent: false }
+                  );
                 }}
               />
             )}

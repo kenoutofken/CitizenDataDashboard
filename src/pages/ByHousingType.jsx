@@ -30,8 +30,8 @@ export default function ByHousingType() {
   }, []);
 
   return (
-    <div className="flex justify-center overflow-y-auto h-screen min-h-[800px] pt-12">
-      <ResponsiveContainer width="80%" height="70%">
+    <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
+      <ResponsiveContainer width="100%" height="70%">
         <BarChart
           data={data}
           layout="vertical"
