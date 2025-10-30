@@ -13,11 +13,8 @@ export default function ByRegion() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("../data/dummy.json")
+    fetch("../data/ByRegion.json")
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch data");
-        }
         return res.json();
       })
       .then((json) => {
@@ -33,8 +30,8 @@ export default function ByRegion() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <ResponsiveContainer width="80%" height="80%">
+    <div className="flex justify-center overflow-y-auto h-screen pt-12">
+      <ResponsiveContainer width="80%" height="70%">
         <BarChart
           data={data}
           layout="vertical"
