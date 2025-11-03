@@ -73,9 +73,9 @@ export default function ByRegion() {
   return (
     <>
       <InfoCard dataFile="ByRegionCards.json" />
-      
-      <div className="flex h-[calc(100vh-4rem)] pt-12 px-12">
-        <div className="w-1/2 h-full min-h-[800px]">
+
+      <div className="flex h-svh pt-12 px-12">
+        <div className="w-1/2 h-full">
           <MapContainer
             className="h-full w-full"
             center={[49.2527, -123.1507]}
@@ -113,7 +113,7 @@ export default function ByRegion() {
             </Marker>
           </MapContainer>
         </div>
-        <div className="w-1/2 h-full min-h-[800px]">
+        <div className="w-1/2 h-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={data}
