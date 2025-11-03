@@ -5,6 +5,7 @@ import ByRegion from "./pages/ByRegion.jsx";
 import ByDemographic from "./pages/ByDemographic.jsx";
 import ByHousingType from "./pages/ByHousingType.jsx";
 import Rationale from "./components/Rationale.jsx";
+import IndicatorDetails from "./components/IndicatorDetails.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/housing-type" element={<ByHousingType />} />
       </Routes>
       <Rationale />
+      <IndicatorDetails />
     </>
   );
 }
