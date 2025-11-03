@@ -10,6 +10,7 @@ import {
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
+import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByRegion() {
   const [data, setData] = useState([]);
@@ -71,6 +72,8 @@ export default function ByRegion() {
 
   return (
     <>
+      <InfoCard dataFile="ByRegionCards.json" />
+      
       <div className="flex h-[calc(100vh-4rem)] pt-12 px-12">
         <div className="w-1/2 h-full min-h-[800px]">
           <MapContainer

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "value": "37%",
+    "title": "Card1",
+    "description": "of Vancouver households spend more than 30% of their income on housing — a rate that has barely changed in two decades."
+  },
+  {
+    "id": 2,
+    "value": "44%",
+    "title": "Card2",
+    "description": "of renter households in Vancouver spent 30% or more of their income on housing — far above the 28% of owner households who face the same cost burden."
+  },
+  {
+    "id": 3,
+    "value": "2x",
+    "title": "Card3",
+    "description": "many renters as owners since 1996 have exceeded the 30% affordability threshold, showing how housing tenure continues to shape economic vulnerability."
+  }
+]

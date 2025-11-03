@@ -8,6 +8,7 @@ import {
   YAxis,
 } from "recharts";
 import { useEffect, useState } from "react";
+import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByHousingType() {
   const [data, setData] = useState([]);
@@ -30,25 +31,29 @@ export default function ByHousingType() {
   }, []);
 
   return (
-    <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
-      <ResponsiveContainer width="100%" height="70%">
-        <BarChart
-          data={data}
-          layout="vertical"
-          margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" domain={[0, "dataMax + 5"]} />
-          <YAxis
-            dataKey="name"
-            type="category"
-            width={140}
-            tick={{ fontSize: 12 }}
-          />
-          <Tooltip />
-          <Bar dataKey="value" fill="#2c6e49" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <>
+      <InfoCard dataFile="ByHousingTypeCards.json" />
+
+      <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
+        <ResponsiveContainer width="100%" height="70%">
+          <BarChart
+            data={data}
+            layout="vertical"
+            margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" domain={[0, "dataMax + 5"]} />
+            <YAxis
+              dataKey="name"
+              type="category"
+              width={140}
+              tick={{ fontSize: 12 }}
+            />
+            <Tooltip />
+            <Bar dataKey="value" fill="#2c6e49" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </>
   );
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "value": "44%",
+    "title": "Card1",
+    "description": "In 2016, 44% of Downtown households spent more than 30% of their income on housing — only a slight improvement from 48% in 2006, showing that affordability challenges remain severe in the city’s core."
+  },
+  {
+    "id": 2,
+    "value": "33%",
+    "title": "Card2",
+    "description": "In 2016, 33% of Fairview households were cost-burdened, down from 34% in 2006, indicating modest progress in affordability over the decade."
+  },
+  {
+    "id": 3,
+    "value": "37%",
+    "title": "Card3",
+    "description": "In 2016, 37% of households citywide spent more than 30% on housing — showing little change from 38% in 2011."
+  }
+]
