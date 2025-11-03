@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 import ByRegion from "./pages/ByRegion.jsx";
 import ByDemographic from "./pages/ByDemographic.jsx";
 import ByHousingType from "./pages/ByHousingType.jsx";
+import Rationale from "./components/Rationale.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/demographic" element={<ByDemographic />} />
         <Route path="/housing-type" element={<ByHousingType />} />
       </Routes>
+      <Rationale />
     </>
   );
 }
