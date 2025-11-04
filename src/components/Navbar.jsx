@@ -10,16 +10,22 @@ export function Navbar() {
         </a>
       </div>
 
-      <div className="flex-none hidden md:block">
-        <ul className="menu menu-horizontal px-1">
+      <div className="flex-none hidden md:block border-b-3 border-primary">
+        <ul className="menu menu-horizontal px-1 py-0 my-0">
           <li>
-            <NavLink to="/">By Region</NavLink>
+            <NavLink className="rounded-none" to="/">
+              By Region
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/demographic">By Demographic</NavLink>
+            <NavLink className="rounded-none" to="/demographic">
+              By Demographic
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/housing-type">By Housing Type</NavLink>
+            <NavLink clasName="rounded-none" to="/housing-type">
+              By Housing Type
+            </NavLink>
           </li>
         </ul>
       </div>

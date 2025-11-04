@@ -12,3 +12,7 @@
 html {
   font-size: clamp(0.7rem, 0.7vw, 3rem);
 }
+
+a.active {
+  @apply bg-primary text-white;
+}
