@@ -12,6 +12,7 @@ import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByDemographic() {
   const [data, setData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("2016");
 
   useEffect(() => {
     fetch("../data/ByDemographic.json")
@@ -34,7 +35,31 @@ export default function ByDemographic() {
     <>
       <InfoCard dataFile="ByDemographicCards.json" />
 
-      <div className="flex h-svh pt-12 px-12">
+      <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+        <div tabIndex={0} role="button" className="btn btn-outline">
+          View Data ({selectedYear}) ▼
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+        >
+          <li>
+            <li className="menu-title">
+              <span className="text-black font-bold">View Data by Year</span>
+            </li>
+          </li>
+          <li>
+            <button
+              onClick={() => setSelectedYear("2016")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              2016 (Latest)
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

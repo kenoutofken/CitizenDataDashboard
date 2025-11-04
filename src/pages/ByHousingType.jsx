@@ -2,6 +2,9 @@ import {
   BarChart,
   Bar,
   CartesianGrid,
+  LineChart,
+  Line,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -13,6 +16,7 @@ import InfoCard from "../components/InfoCard.jsx";
 export default function ByHousingType() {
   const [data, setData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
+  const isTrending = selectedYear === "Trending";
 
   useEffect(() => {
     fetch("../data/ByHousingType.json")
@@ -29,32 +33,126 @@ export default function ByHousingType() {
         setData(chartData);
       })
       .catch((err) => console.error("Error fetching data:", err));
-  }, []);
+  }, [selectedYear]);
+
+  const trendData = [
+    { year: "1996", "Owned Housing": 24, "Rented Housing": 47 },
+    { year: "2001", "Owned Housing": 25, "Rented Housing": 43 },
+    { year: "2006", "Owned Housing": 29, "Rented Housing": 45 },
+    { year: "2011", "Owned Housing": 29, "Rented Housing": 46 },
+    { year: "2016", "Owned Housing": 28, "Rented Housing": 44 },
+  ];
 
   return (
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
-      <div className="flex h-svh pt-12 px-12">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data}
-            layout="vertical"
-            margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
-          >
+      <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+        <div tabIndex={0} role="button" className="btn btn-outline">
+          View Data ({selectedYear}) ▼
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+        >
+          <li>
+            <button
+              className="text-black font-bold hover:bg-primary hover:text-white"
+              onClick={() => setSelectedYear("Trending")}
+            >
+              View Data Trends
+            </button>
+          </li>
+
+          <li className="menu-title">
+            <span className="text-black font-bold">View Data by Year</span>
+          </li>
+
+          <li>
+            <button
+              onClick={() => setSelectedYear("2016")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              2016 (Latest)
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setSelectedYear("2011")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              2011
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => setSelectedYear("2006")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              2006
+            </button>
+            <button
+              onClick={() => setSelectedYear("2001")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              2001
+            </button>
+            <button
+              onClick={() => setSelectedYear("1996")}
+              className="pl-6 hover:bg-primary hover:text-white"
+            >
+              1996
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      {isTrending ? (
+        <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
+          <LineChart data={trendData} style={{ width: "100%", height: "100%" }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={[0, "dataMax + 5"]} />
+            <XAxis dataKey="year" />
             <YAxis
-              dataKey="name"
-              type="category"
-              width={140}
-              tick={{ fontSize: 12 }}
+              domain={["dataMin -3", "dataMax + 5"]}
+              padding={{ bottom: 60 }}
             />
             <Tooltip />
-            <Bar dataKey="value" fill="#2c6e49" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+            <Line
+              type="monotone"
+              dataKey="Owned Housing"
+              stroke="#0279B1"
+              strokeWidth={12}
+            />
+            <Line
+              type="monotone"
+              dataKey="Rented Housing"
+              stroke="#5EA61B"
+              strokeWidth={12}
+            />
+          </LineChart>
+        </div>
+      ) : (
+        <div className="flex h-[calc(50vh)] pt-12 px-12">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, "dataMax + 5"]} />
+              <YAxis
+                dataKey="name"
+                type="category"
+                width={140}
+                tick={{ fontSize: 18 }}
+              />
+              <Tooltip />
+              <Bar dataKey="value" fill="#2c6e49" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </>
   );
 }
