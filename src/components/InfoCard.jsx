@@ -13,7 +13,7 @@ export default function InfoCard({ dataFile }) {
   }, [dataFile]);
 
   return (
-    <div className="flex flex-wrap gap-8 pt-12 px-12">
+    <div className="flex flex-col md:flex-row justify-center items-center mx-auto gap-8 pt-12 px-12">
       {data.map((card) => (
         <div key={card.id} className="card bg-base-100 flex-1 shadow-md">
           <div className="card-body items-center text-center">

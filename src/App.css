@@ -4,11 +4,11 @@
 }
 
 :root {
-  .text-fluid-title {
-    font-size: clamp(1.5rem, 4vw + 0.5rem, 3rem);
-  }
+  --color-primary: #0279b1;
+  --color-secondary: #5ea61b;
+}
 
-  .text-fluid-body {
-    font-size: clamp(1rem, 2vw + 0.25rem, 1.25rem);
-  }
+/* ✅ Correct font clamp syntax */
+html {
+  font-size: clamp(0.7rem, 0.7vw, 3rem);
 }

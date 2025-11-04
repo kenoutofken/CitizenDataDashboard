@@ -12,6 +12,7 @@ import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByHousingType() {
   const [data, setData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("2016");
 
   useEffect(() => {
     fetch("../data/ByHousingType.json")
@@ -20,7 +21,7 @@ export default function ByHousingType() {
       })
       .then((json) => {
         const chartData = json
-          .filter((d) => d.periodlabel === "2016") // filter optional
+          .filter((d) => d.periodlabel === selectedYear) // filter optional
           .map((d) => ({
             name: d.disaggregationcategory, // y-axis label
             value: d.actualvalue, // bar value
@@ -34,8 +35,8 @@ export default function ByHousingType() {
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
-      <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
-        <ResponsiveContainer width="100%" height="70%">
+      <div className="flex h-svh pt-12 px-12">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
             layout="vertical"

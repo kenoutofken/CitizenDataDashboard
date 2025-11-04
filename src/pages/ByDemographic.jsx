@@ -34,8 +34,8 @@ export default function ByDemographic() {
     <>
       <InfoCard dataFile="ByDemographicCards.json" />
 
-      <div className="flex h-[calc(100vh-6rem)] pt-12 px-12">
-        <ResponsiveContainer width="100%" height="70%">
+      <div className="flex h-svh pt-12 px-12">
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
             layout="vertical"
