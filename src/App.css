@@ -14,5 +14,5 @@ html {
 }
 
 a.active {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white hover:bg-transparent hover:shadow-none hover:text-white;
 }

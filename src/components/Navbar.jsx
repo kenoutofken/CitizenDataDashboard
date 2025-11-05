@@ -3,28 +3,26 @@ import { NavLink } from "react-router";
 
 export function Navbar() {
   return (
-    <div className="navbar top-0 left-0 right-0 z-50 bg-base-200 px-5">
-      <div className="flex-1 flex items-center">
-        <a className="btn btn-ghost text-xl">
-          Households spending over 30% of income on housing
-        </a>
-      </div>
-
-      <div className="flex-none hidden md:block border-b-3 border-primary">
-        <ul className="menu menu-horizontal px-1 py-0 my-0">
+    <div className="navbar top-0 left-0 right-0 z-50 bg-base-200 border-b-3 border-primary p-0">
+      <div className="flex-none hidden md:block">
+        <ul className="menu menu-horizontal px-0 py-0 ml-12 my-0">
           <li>
             <NavLink className="rounded-none" to="/">
-              By Region
+              <button className="btn btn-ghost btn-xl w-80">By Region</button>
             </NavLink>
           </li>
           <li>
             <NavLink className="rounded-none" to="/demographic">
-              By Demographic
+              <button className="btn btn-ghost btn-xl w-80">
+                By Demographic
+              </button>
             </NavLink>
           </li>
           <li>
             <NavLink className="rounded-none" to="/housing-type">
-              By Housing Type
+              <button className="btn btn-ghost btn-xl w-80">
+                By Housing Type
+              </button>
             </NavLink>
           </li>
         </ul>
@@ -50,6 +48,12 @@ export function Navbar() {
             </li>
           </ul>
         </div>
+      </div>
+
+      <div className="flex-1 flex justify-end items-center">
+        <span className="text-lg md:text-xl font-semibold text-black text-right mr-12">
+          Households spending over 30% of income on housing
+        </span>
       </div>
     </div>
   );

@@ -207,7 +207,7 @@ export default function ByRegion() {
                       onChange={() => toggleRegion(r)}
                       className="checkbox checkbox-primary"
                     />
-                    <span>{r}</span>
+                    <span>{r === "CSD" ? "City Average (CSD)" : r}</span>
                   </label>
                 ))}
                 <button
@@ -308,52 +308,56 @@ export default function ByRegion() {
       </div>
       {isTrending ? (
         <div className="flex h-[calc(100vh-12rem)] pt-8 px-12">
-          {regions.length === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-              <p className="text-primary text-3xl text-center bg-white/80 px-4 py-2 rounded-md shadow-sm">
-                Populate this chart by selecting regions in the dropdown menu.
-              </p>
-            </div>
-          )}
+          <div className="relative isolate w-full overflow-hidden">
+            {regions.length === 0 && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                <div className="alert alert-info shadow-md pointer-events-auto">
+                  <span>
+                    Populate this chart by selecting regions in the dropdown.
+                  </span>
+                </div>
+              </div>
+            )}
 
-          <LineChart
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            responsive
-            data={trendData}
-            margin={{
-              top: 5,
-              right: 0,
-              left: 0,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis domain={["dataMin - 5", "dataMax + 5"]} />
-            <Tooltip />
-            <Legend
-              wrapperStyle={{
-                fontSize: "16px",
-                fontWeight: 600,
-                paddingTop: "10px",
+            <LineChart
+              style={{
+                width: "100%",
+                height: "100%",
               }}
-            />
-            {regions.map((region, i) => (
-              <Line
-                connectNulls
-                key={region}
-                type="monotone"
-                dataKey={region}
-                stroke={lineColors[i % lineColors.length]}
-                strokeWidth={4}
-                dot={true}
-                isAnimationActive={true}
+              responsive
+              data={trendData}
+              margin={{
+                top: 5,
+                right: 0,
+                left: 0,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" />
+              <YAxis domain={["dataMin - 5", "dataMax + 5"]} />
+              <Tooltip />
+              <Legend
+                wrapperStyle={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  paddingTop: "10px",
+                }}
               />
-            ))}
-          </LineChart>
+              {regions.map((region, i) => (
+                <Line
+                  connectNulls
+                  key={region}
+                  type="monotone"
+                  dataKey={region}
+                  stroke={lineColors[i % lineColors.length]}
+                  strokeWidth={4}
+                  dot={true}
+                  isAnimationActive={true}
+                />
+              ))}
+            </LineChart>
+          </div>
         </div>
       ) : (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
