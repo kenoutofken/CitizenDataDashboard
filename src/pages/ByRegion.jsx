@@ -18,7 +18,7 @@ import InfoCard from "../components/InfoCard.jsx";
 export default function ByRegion() {
   const [raw, setRaw] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
-  const [selectedAreas, setSelectedAreas] = useState([]); // ✅ NEW: for checkbox filtering
+  const [selectedAreas, setSelectedAreas] = useState([]); // for checkbox filtering
 
   useEffect(() => {
     fetch("/data/ByRegion.json")
@@ -86,7 +86,7 @@ export default function ByRegion() {
             : parseFloat(d.actualvalue),
       }))
       .sort((a, b) => b.value - a.value);
-  }, [raw, selectedYear, isTrending, selectedAreas]); // ✅ added selectedAreas dependency
+  }, [raw, selectedYear, isTrending, selectedAreas]); // added selectedAreas dependency
 
   // ----- geojson (per-year) -----
   const geoData = useMemo(() => {
@@ -131,7 +131,7 @@ export default function ByRegion() {
       .filter(Boolean);
 
     return { type: "FeatureCollection", features };
-  }, [raw, selectedYear, isTrending, selectedAreas]); // ✅ added selectedAreas dependency
+  }, [raw, selectedYear, isTrending, selectedAreas]); // added selectedAreas dependency
 
   // ---- IMPERATIVE CONTROL OF THE LAYER ----
   const geoRef = useRef(null);
@@ -158,65 +158,126 @@ export default function ByRegion() {
     <>
       <InfoCard dataFile="ByRegionCards.json" />
 
-      {/* YEAR SELECT DROPDOWN */}
-      <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
-        <div tabIndex={0} role="button" className="btn btn-outline">
-          View Data ({selectedYear}) ▼
+      {/* ✅ TOP DROPDOWNS ROW (side-by-side with gap) */}
+      <div className="flex justify-end gap-4 pt-20 px-12 flex-wrap">
+        {/* YEAR SELECT DROPDOWN */}
+        <div className="dropdown dropdown-bottom">
+          <div tabIndex={0} role="button" className="btn btn-outline">
+            View Data ({selectedYear}) ▼
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+          >
+            <li>
+              <button
+                className="text-black font-bold hover:bg-primary hover:text-white"
+                onClick={() => setSelectedYear("Trending")}
+              >
+                View Data Trends
+              </button>
+            </li>
+
+            <li className="menu-title">
+              <span className="text-black font-bold">View Data by Year</span>
+            </li>
+
+            <li>
+              <button
+                onClick={() => setSelectedYear("2016")}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                2016 (Latest)
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setSelectedYear("2011")}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                2011
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setSelectedYear("2006")}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                2006
+              </button>
+              <button
+                onClick={() => setSelectedYear("2001")}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                2001
+              </button>
+              <button
+                onClick={() => setSelectedYear("1996")}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                1996
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
-        >
-          <li>
-            <button
-              className="text-black font-bold hover:bg-primary hover:text-white"
-              onClick={() => setSelectedYear("Trending")}
-            >
-              View Data Trends
-            </button>
-          </li>
 
-          <li className="menu-title">
-            <span className="text-black font-bold">View Data by Year</span>
-          </li>
+        {/* FILTER CHECKBOXES DROPDOWN SECTION */}
+        {!isTrending && (
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-outline">
+              Filter by Local Area ({selectedAreas.length} selected) ▼
+            </div>
 
-          <li>
-            <button
-              onClick={() => setSelectedYear("2016")}
-              className="pl-6 hover:bg-primary hover:text-white"
+            {/* vertical scroll dropdown -- 800px height to contain 22 areas */}
+            <ul
+              tabIndex={0}
+              className="
+                dropdown-content menu menu-compact
+                flex flex-col
+                bg-base-100 border border-base-content rounded-box
+                w-72 max-h-[800px]
+                overflow-y-auto overflow-x-hidden
+                shadow-md p-2
+                min-w-0
+              "
             >
-              2016 (Latest)
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedYear("2011")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2011
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedYear("2006")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2006
-            </button>
-            <button
-              onClick={() => setSelectedYear("2001")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2001
-            </button>
-            <button
-              onClick={() => setSelectedYear("1996")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              1996
-            </button>
-          </li>
-        </ul>
+              <li className="menu-title flex justify-between items-center mb-2 min-w-0">
+                <span className="font-bold text-black">Select Areas</span>
+                <div className="flex gap-1 ml-2 flex-none">
+                  <button
+                    className="btn btn-xs btn-success"
+                    onClick={() => setSelectedAreas(allAreas)}
+                  >
+                    All
+                  </button>
+                  <button
+                    className="btn btn-xs btn-error"
+                    onClick={() => setSelectedAreas([])}
+                  >
+                    None
+                  </button>
+                </div>
+              </li>
+
+              {/* Filter by Area */}
+              {allAreas.map((area) => (
+                <li key={area} className="w-full min-w-0">
+                  <label className="cursor-pointer flex items-center gap-2 w-full min-w-0">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm checkbox-primary flex-none"
+                      checked={selectedAreas.includes(area)}
+                      onChange={() => toggleArea(area)}
+                    />
+                    <span className="label-text text-sm break-words whitespace-normal overflow-hidden min-w-0">
+                      {area}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {isTrending ? (
@@ -242,58 +303,6 @@ export default function ByRegion() {
         </div>
       ) : (
         <div className="flex flex-col gap-6 h-[calc(100vh-12rem)] pt-12 px-12">
-          {/* FILTER CHECKBOXES DROPDOWN SECTION */}
-          <div className="w-full flex justify-end">
-            <div className="dropdown dropdown-bottom dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-outline mb-4">
-                Filter by Local Area ({selectedAreas.length} selected) ▼
-              </div>
-
-              {/* vertical scroll dropdown -- 800px height to contain 22 areas */}
-              <ul
-                tabIndex={0}
-                className="
-                  dropdown-content menu menu-compact
-                  flex flex-col
-                  bg-base-100 border border-base-content rounded-box
-                  w-72 max-h-[800px]
-                  overflow-y-auto overflow-x-hidden
-                  shadow-md p-2
-                  min-w-0
-                "
-              >
-                <li className="menu-title flex justify-between items-center mb-2 min-w-0">
-                  <span className="font-bold text-black">Select Areas</span>
-                  <div className="flex gap-1 ml-2 flex-none">
-                    <button className="btn btn-xs btn-success" onClick={() => setSelectedAreas(allAreas)}>
-                      All
-                    </button>
-                    <button className="btn btn-xs btn-error" onClick={() => setSelectedAreas([])}>
-                      None
-                    </button>
-                  </div>
-                </li>
-
-                {/* Filter by Area */}
-                {allAreas.map((area) => (
-                  <li key={area} className="w-full min-w-0">
-                    <label className="cursor-pointer flex items-center gap-2 w-full min-w-0">
-                      <input
-                        type="checkbox"
-                        className="checkbox checkbox-sm checkbox-primary flex-none"
-                        checked={selectedAreas.includes(area)}
-                        onChange={() => toggleArea(area)}
-                      />
-                      <span className="label-text text-sm break-words whitespace-normal overflow-hidden min-w-0">
-                        {area}
-                      </span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
           {/* MAP + BAR CHART LAYOUT */}
           <div className="flex flex-col md:flex-row gap-6 flex-1">
             <div className="w-full md:w-1/2 h-[500px] md:h-full">
