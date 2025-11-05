@@ -82,7 +82,7 @@ export default function ByHousingType() {
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
       <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
-        <div tabIndex={0} role="button" className="btn btn-outline">
+        <div tabIndex={0} role="button" className="btn btn-outline bg-base-100">
           View Data ({selectedYear}) ▼
         </div>
         <ul

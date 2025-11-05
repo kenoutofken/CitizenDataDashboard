@@ -191,7 +191,11 @@ export default function ByRegion() {
       <div className="flex justify-end relative">
         {isTrending && (
           <div className="left-16 dropdown dropdown-bottom pt-20 px-12 flex justify-end">
-            <div tabIndex={0} role="button" className="btn btn-outline">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline bg-base-100"
+            >
               Select Regions (Up to 5) ▼
             </div>
             <ul
@@ -212,7 +216,7 @@ export default function ByRegion() {
                 ))}
                 <button
                   onClick={() => setRegions([])}
-                  className="btn btn-warning btn-sm mt-2"
+                  className="btn btn-warning btn-block mt-2"
                 >
                   Clear All
                 </button>
@@ -224,7 +228,11 @@ export default function ByRegion() {
 
         {!isTrending && (
           <div className="left-16 dropdown dropdown-bottom pt-20 px-12 flex justify-end">
-            <div tabIndex={0} role="button" className="btn btn-outline">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline bg-base-100"
+            >
               Sort Data by ▼
             </div>
             <ul
@@ -273,7 +281,11 @@ export default function ByRegion() {
         )}
 
         <div className="dropdown dropdown-bottom pt-20 px-8 flex justify-end">
-          <div tabIndex={0} role="button" className="btn btn-outline">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-outline bg-base-100"
+          >
             View Data ({selectedYear}) ▼
           </div>
           <ul

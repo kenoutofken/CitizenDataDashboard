@@ -37,7 +37,11 @@ export default function ByDemographic() {
 
       <div className="flex justify-end relative">
         <div className="left-16 dropdown dropdown-bottom pt-20 px-8 flex justify-end">
-          <div tabIndex={0} role="button" className="btn btn-outline">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-outline bg-base-100"
+          >
             Sort Data by ▼
           </div>
           <ul
@@ -81,7 +85,11 @@ export default function ByDemographic() {
         </div>
 
         <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
-          <div tabIndex={0} role="button" className="btn btn-outline">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-outline bg-base-100"
+          >
             View Data ({selectedYear}) ▼
           </div>
           <ul

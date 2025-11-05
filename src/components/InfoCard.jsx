@@ -16,12 +16,12 @@ export default function InfoCard({ dataFile }) {
   }, [dataFile]);
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center mx-auto gap-8 pt-12 px-12">
+    <div className="grid grid-cols-3 gap-8 pt-12 px-12">
       {data.map((card) => (
-        <div key={card.id} className="card bg-base-100 flex-1 shadow-md">
-          <div className="card-body items-center text-center">
-            <h2 className="text-4xl font-bold text-[#0279B1]">{card.value}</h2>
-            <p className="text-gray-700 text-base">{card.description}</p>
+        <div key={card.id} className="card bg-base-100 shadow-md py-8">
+          <div className="card-body flex justify-between items-center text-center">
+            <h2 className="text-7xl font-bold text-primary">{card.value}</h2>
+            <p className="text-gray-700 text-xl">{card.description}</p>
           </div>
         </div>
       ))}
