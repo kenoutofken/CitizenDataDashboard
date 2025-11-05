@@ -13,7 +13,7 @@ import {
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useEffect, useRef, useState } from "react";
 import "leaflet/dist/leaflet.css";
-import InfoCard from "../components/InfoCard.jsx";
+import InfoCard from "../components/InfoCard";
 
 export default function ByRegion() {
   const [barData, setBarData] = useState([]);
@@ -53,7 +53,7 @@ export default function ByRegion() {
   const lineColors = ["#8884d8", "#82ca9d", "#ff7300", "#0279B1", "#5EA61B"];
 
   useEffect(() => {
-    fetch("../data/ByRegion.json")
+    fetch("data/ByRegion.json")
       .then((res) => {
         return res.json();
       })
@@ -306,9 +306,16 @@ export default function ByRegion() {
           </ul>
         </div>
       </div>
-
       {isTrending ? (
         <div className="flex h-[calc(100vh-12rem)] pt-8 px-12">
+          {regions.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+              <p className="text-primary text-3xl text-center bg-white/80 px-4 py-2 rounded-md shadow-sm">
+                Populate this chart by selecting regions in the dropdown menu.
+              </p>
+            </div>
+          )}
+
           <LineChart
             style={{
               width: "100%",
@@ -343,7 +350,7 @@ export default function ByRegion() {
                 stroke={lineColors[i % lineColors.length]}
                 strokeWidth={4}
                 dot={true}
-                isAnimationActive={false}
+                isAnimationActive={true}
               />
             ))}
           </LineChart>
@@ -361,6 +368,12 @@ export default function ByRegion() {
               <GeoJSON
                 key={`${refreshKey}`}
                 data={geoData}
+                fillColor="#0279b1"
+                weight={1}
+                opacity={1}
+                color="white"
+                fillOpacity={0.7}
+                ref={geoRef}
                 onEachFeature={(feature, layer) => {
                   layer.bindTooltip(
                     `<strong>${feature.properties.geographyname}</strong><br/>${feature.properties.actualvalue}%`,

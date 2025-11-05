@@ -22,7 +22,7 @@ export default function ByHousingType() {
   const isTrending = selectedYear === "Trending";
 
   useEffect(() => {
-    fetch("../data/ByHousingType.json")
+    fetch("data/ByHousingType.json")
       .then((res) => {
         return res.json();
       })

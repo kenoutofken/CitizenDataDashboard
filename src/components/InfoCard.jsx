@@ -5,11 +5,14 @@ export default function InfoCard({ dataFile }) {
 
   useEffect(() => {
     if (!dataFile) return;
-
-    fetch(`/data/${dataFile}`)
-      .then((response) => response.json())
-      .then((jsonData) => setData(jsonData))
-      .catch((error) => console.error("Failed to load JSON", error));
+    const url = `data/${dataFile}`;
+    fetch(url)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+        return r.json();
+      })
+      .then(setData)
+      .catch((err) => console.error("Failed to load JSON", err));
   }, [dataFile]);
 
   return (

@@ -15,7 +15,7 @@ export default function ByDemographic() {
   const [selectedYear, setSelectedYear] = useState("2016");
 
   useEffect(() => {
-    fetch("../data/ByDemographic.json")
+    fetch("data/ByDemographic.json")
       .then((res) => {
         return res.json();
       })
@@ -86,7 +86,7 @@ export default function ByDemographic() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
+            className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
           >
             <li>
               <li className="menu-title">

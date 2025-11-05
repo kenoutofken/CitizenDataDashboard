@@ -43,7 +43,7 @@ export default function IndicatorDetails() {
           </div>
 
           <h3 className="font-semibold text-base mb-2">Related indicators:</h3>
-          <ul className="list-disc list-inside space-y-1 text-sky-700 text-base">
+          <ul className="list-disc list-inside space-y-1 text-primary text-base">
             <li>
               <a href="#" className="link link-hover">
                 Walking and cycling trips on a typical weekday
