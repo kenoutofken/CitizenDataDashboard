@@ -18,7 +18,7 @@ import InfoCard from "../components/InfoCard.jsx";
 export default function ByRegion() {
   const [raw, setRaw] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
-  const [selectedAreas, setSelectedAreas] = useState([]); // for checkbox filtering
+  const [selectedAreas, setSelectedAreas] = useState(""); // for checkbox filtering
 
   useEffect(() => {
     fetch("/data/ByRegion.json")
@@ -29,22 +29,43 @@ export default function ByRegion() {
 
   const isTrending = selectedYear === "Trending";
 
-  // ✅ NEW: extract unique local area names per selected year
+  // extract unique local area names per selected year | Returns array of local areas
   const allAreas = useMemo(() => {
-    const filtered = raw.filter(
-      (d) => d.geolevelname === "Local Area" && d.periodlabel === selectedYear
-    );
+    if (!raw.length) return [];
+
+    let filtered;
+    if (selectedYear === "Trending") {
+      // For Trending, show all Local Areas
+      filtered = raw.filter((d) => d.geolevelname === "Local Area");
+    } else {
+      // For a specific year, show only that year's areas
+      filtered = raw.filter(
+        (d) => d.geolevelname === "Local Area" && d.periodlabel === selectedYear
+      );
+    }
+
     return [...new Set(filtered.map((d) => d.geographyname))].sort();
   }, [raw, selectedYear]);
+
+
 
   // ----- trending (line) -----
   const trendData = useMemo(() => {
     if (!raw.length) return [];
+
     const rows = raw.filter((d) => d.geolevelname === "Local Area");
+
     const years = [...new Set(rows.map((d) => String(d.periodlabel)))].sort(
       (a, b) => +a - +b
     );
-    const areas = [...new Set(rows.map((d) => d.geographyname))].sort();
+
+    let areas = [...new Set(rows.map((d) => d.geographyname))].sort();
+
+    // filter to selected areas (if any)
+    if (selectedAreas.length > 0) {
+      areas = areas.filter((a) => selectedAreas.includes(a));
+    }
+
     const byYA = new Map();
     rows.forEach((d) => {
       const key = `${String(d.periodlabel)}||${d.geographyname}`;
@@ -54,6 +75,7 @@ export default function ByRegion() {
           : parseFloat(d.actualvalue);
       byYA.set(key, v);
     });
+
     return years.map((y) => {
       const row = { year: y };
       areas.forEach((a) => {
@@ -61,7 +83,8 @@ export default function ByRegion() {
       });
       return row;
     });
-  }, [raw]);
+  }, [raw, selectedAreas]); // include selectedAreas as dependency
+
 
   // ----- bar (per-year) -----
   const barData = useMemo(() => {
@@ -72,7 +95,7 @@ export default function ByRegion() {
         d.geolevelname === "Local Area"
     );
 
-    // ✅ NEW: apply selected area filter if any are checked
+    // apply selected area filter if any are checked
     if (selectedAreas.length > 0) {
       filtered = filtered.filter((d) => selectedAreas.includes(d.geographyname));
     }
@@ -222,7 +245,7 @@ export default function ByRegion() {
         </div>
 
         {/* FILTER CHECKBOXES DROPDOWN SECTION */}
-        {!isTrending && (
+
           <div className="dropdown dropdown-bottom dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-outline">
               Filter by Local Area ({selectedAreas.length} selected) ▼
@@ -259,7 +282,7 @@ export default function ByRegion() {
                 </div>
               </li>
 
-              {/* Filter by Area */}
+              {/* Filter by Area | Checks allAreas array for each local area */}
               {allAreas.map((area) => (
                 <li key={area} className="w-full min-w-0">
                   <label className="cursor-pointer flex items-center gap-2 w-full min-w-0">
@@ -277,7 +300,6 @@ export default function ByRegion() {
               ))}
             </ul>
           </div>
-        )}
       </div>
 
       {isTrending ? (
