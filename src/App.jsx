@@ -12,9 +12,15 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<ByRegion />} />
-        <Route path="/demographic" element={<ByDemographic />} />
-        <Route path="/housing-type" element={<ByHousingType />} />
+        <Route path="citizendatadashboard/" element={<ByRegion />} />
+        <Route
+          path="citizendatadashboard/demographic"
+          element={<ByDemographic />}
+        />
+        <Route
+          path="citizendatadashboard/housing-type"
+          element={<ByHousingType />}
+        />
       </Routes>
       <Rationale />
       <IndicatorDetails />

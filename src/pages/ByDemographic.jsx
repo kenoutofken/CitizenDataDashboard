@@ -36,7 +36,7 @@ export default function ByDemographic() {
       <InfoCard dataFile="ByDemographicCards.json" />
 
       <div className="flex justify-end relative">
-        <div className="left-16 dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+        <div className="left-16 dropdown dropdown-bottom pt-20 px-8 flex justify-end">
           <div tabIndex={0} role="button" className="btn btn-outline">
             Sort Data by ▼
           </div>
@@ -86,7 +86,7 @@ export default function ByDemographic() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+            className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
           >
             <li>
               <li className="menu-title">

@@ -1,4 +1,6 @@
 import {
+  AreaChart,
+  Area,
   BarChart,
   Bar,
   CartesianGrid,
@@ -73,6 +75,8 @@ export default function ByHousingType() {
     { year: "2016", "Owned Housing": 28, "Rented Housing": 44 },
   ]; */
 
+  const years = ["2016", "2011", "2006", "2001", "1996"];
+
   return (
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
@@ -83,7 +87,7 @@ export default function ByHousingType() {
         </div>
         <ul
           tabIndex={0}
-          className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+          className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
         >
           <li>
             <button
@@ -98,69 +102,52 @@ export default function ByHousingType() {
             <span className="text-black font-bold">View Data by Year</span>
           </li>
 
-          <li>
-            <button
-              onClick={() => setSelectedYear("2016")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2016 (Latest)
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedYear("2011")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2011
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setSelectedYear("2006")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2006
-            </button>
-            <button
-              onClick={() => setSelectedYear("2001")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              2001
-            </button>
-            <button
-              onClick={() => setSelectedYear("1996")}
-              className="pl-6 hover:bg-primary hover:text-white"
-            >
-              1996
-            </button>
-          </li>
+          {years.map((year) => (
+            <li key={year}>
+              <button
+                onClick={() => setSelectedYear(year)}
+                className="pl-6 hover:bg-primary hover:text-white"
+              >
+                {year}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
 
       {isTrending ? (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <LineChart data={trendData} style={{ width: "100%", height: "100%" }}>
+          <AreaChart data={trendData} style={{ width: "100%", height: "100%" }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
-            <YAxis
-              domain={["dataMin -3", "dataMax + 5"]}
-              padding={{ bottom: 60 }}
-            />
+            <YAxis domain={[0, "dataMax + 5"]} padding={{ bottom: 0 }} />
             <Tooltip />
-            <Legend />
-            <Line
+            <Legend
+              wrapperStyle={{
+                fontSize: "16px",
+                fontWeight: 600,
+                paddingTop: "10px",
+              }}
+            />
+            <Area
               type="monotone"
               dataKey="Owned housing"
               stroke="#0279B1"
+              fill="#0279B1"
+              stackId="1"
               strokeWidth={4}
+              dot={true}
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="Rented housing"
               stroke="#5EA61B"
+              fill="#5EA61B"
+              stackId="1"
               strokeWidth={4}
+              dot={true}
             />
-          </LineChart>
+          </AreaChart>
         </div>
       ) : (
         <div className="flex h-[calc(50vh)] pt-12 px-12">

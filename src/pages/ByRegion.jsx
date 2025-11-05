@@ -272,7 +272,7 @@ export default function ByRegion() {
           </div>
         )}
 
-        <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+        <div className="dropdown dropdown-bottom pt-20 px-8 flex justify-end">
           <div tabIndex={0} role="button" className="btn btn-outline">
             View Data ({selectedYear}) ▼
           </div>
@@ -308,7 +308,7 @@ export default function ByRegion() {
       </div>
 
       {isTrending ? (
-        <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
+        <div className="flex h-[calc(100vh-12rem)] pt-8 px-12">
           <LineChart
             style={{
               width: "100%",
@@ -327,7 +327,13 @@ export default function ByRegion() {
             <XAxis dataKey="year" />
             <YAxis domain={["dataMin - 5", "dataMax + 5"]} />
             <Tooltip />
-            <Legend />
+            <Legend
+              wrapperStyle={{
+                fontSize: "16px",
+                fontWeight: 600,
+                paddingTop: "10px",
+              }}
+            />
             {regions.map((region, i) => (
               <Line
                 connectNulls
