@@ -15,6 +15,7 @@ import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByHousingType() {
   const [data, setData] = useState([]);
+  const [trendData, setTrendData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
   const isTrending = selectedYear === "Trending";
 
@@ -30,18 +31,47 @@ export default function ByHousingType() {
             name: d.disaggregationcategory, // y-axis label
             value: d.actualvalue, // bar value
           }));
-        setData(chartData);
+        setData(
+          chartData.sort((a, b) => {
+            if (a.name === "Owned housing") return -1;
+            if (b.name === "Owned housing") return 1;
+            return b.value - a.value;
+          })
+        );
+        console.log("Chart Data:", chartData);
+
+        const lineData = [];
+        const trendYears = ["1996", "2001", "2006", "2011", "2016"];
+
+        trendYears.forEach((yr) =>
+          json
+            .filter((d) => d.periodlabel === yr)
+            .forEach((d) => {
+              let yearData = lineData.find((td) => td.year === yr);
+              if (!yearData) {
+                yearData = {
+                  year: yr,
+                  [d.disaggregationcategory]: d.actualvalue,
+                };
+                lineData.push(yearData);
+              } else {
+                yearData[d.disaggregationcategory] = d.actualvalue;
+              }
+            })
+        );
+        setTrendData(lineData);
+        console.log("Trend Data:", lineData);
       })
       .catch((err) => console.error("Error fetching data:", err));
   }, [selectedYear]);
 
-  const trendData = [
+  /*   const trendData2 = [
     { year: "1996", "Owned Housing": 24, "Rented Housing": 47 },
     { year: "2001", "Owned Housing": 25, "Rented Housing": 43 },
     { year: "2006", "Owned Housing": 29, "Rented Housing": 45 },
     { year: "2011", "Owned Housing": 29, "Rented Housing": 46 },
     { year: "2016", "Owned Housing": 28, "Rented Housing": 44 },
-  ];
+  ]; */
 
   return (
     <>
@@ -119,13 +149,13 @@ export default function ByHousingType() {
             <Tooltip />
             <Line
               type="monotone"
-              dataKey="Owned Housing"
+              dataKey="Owned housing"
               stroke="#0279B1"
               strokeWidth={12}
             />
             <Line
               type="monotone"
-              dataKey="Rented Housing"
+              dataKey="Rented housing"
               stroke="#5EA61B"
               strokeWidth={12}
             />
@@ -136,19 +166,20 @@ export default function ByHousingType() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={data}
-              layout="vertical"
+              layout="horizontal"
               margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" domain={[0, "dataMax + 5"]} />
-              <YAxis
+              <YAxis type="number" domain={["dataMin - 5", "dataMax + 5"]} />
+              <XAxis
                 dataKey="name"
                 type="category"
                 width={140}
                 tick={{ fontSize: 18 }}
+                sorted={false}
               />
               <Tooltip />
-              <Bar dataKey="value" fill="#2c6e49" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

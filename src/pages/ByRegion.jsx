@@ -11,119 +11,54 @@ import {
   YAxis,
 } from "recharts";
 import { GeoJSON, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import InfoCard from "../components/InfoCard.jsx";
 
 export default function ByRegion() {
-  const [raw, setRaw] = useState([]);
+  const [barData, setBarData] = useState([]);
+  const [trendData, setTrendData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
-
-  useEffect(() => {
-    fetch("/data/ByRegion.json")
-      .then((r) => r.json())
-      .then(setRaw)
-      .catch((e) => console.error("fetch error", e));
-  }, []);
-
   const isTrending = selectedYear === "Trending";
 
-  // ----- trending (line) -----
-  const trendData = useMemo(() => {
-    if (!raw.length) return [];
-    const rows = raw.filter((d) => d.geolevelname === "Local Area");
-    const years = [...new Set(rows.map((d) => String(d.periodlabel)))].sort(
-      (a, b) => +a - +b
-    );
-    const areas = [...new Set(rows.map((d) => d.geographyname))].sort();
-    const byYA = new Map();
-    rows.forEach((d) => {
-      const key = `${String(d.periodlabel)}||${d.geographyname}`;
-      const v =
-        typeof d.actualvalue === "number"
-          ? d.actualvalue
-          : parseFloat(d.actualvalue);
-      byYA.set(key, v);
-    });
-    return years.map((y) => {
-      const row = { year: y };
-      areas.forEach((a) => {
-        row[a] = byYA.get(`${y}||${a}`) ?? null;
-      });
-      return row;
-    });
-  }, [raw]);
-
-  // ----- bar (per-year) -----
-  const barData = useMemo(() => {
-    if (isTrending || !raw.length) return [];
-    const filtered = raw.filter(
-      (d) =>
-        String(d.periodlabel) === String(selectedYear) &&
-        d.geolevelname === "Local Area"
-    );
-    return filtered
-      .map((d) => ({
-        name: d.geographyname,
-        value:
-          typeof d.actualvalue === "number"
-            ? d.actualvalue
-            : parseFloat(d.actualvalue),
-      }))
-      .sort((a, b) => b.value - a.value);
-  }, [raw, selectedYear, isTrending]);
-
-  // ----- geojson (per-year) -----
-  const geoData = useMemo(() => {
-    if (isTrending || !raw.length) return null;
-
-    const filtered = raw.filter(
-      (d) =>
-        String(d.periodlabel) === String(selectedYear) &&
-        d.geolevelname === "Local Area"
-    );
-
-    const features = filtered
-      .map((d) => {
-        // deep-clone geometry so Leaflet doesn't reuse previous layer internals
-        const srcGeom =
-          d.geom?.type === "Feature"
-            ? d.geom.geometry
-            : d.geom?.geometry ?? d.geom;
-        if (!srcGeom) return null;
-        const geometry = JSON.parse(JSON.stringify(srcGeom));
-
-        const v =
-          typeof d.actualvalue === "number"
-            ? d.actualvalue
-            : parseFloat(d.actualvalue);
-
-        return {
-          type: "Feature",
-          geometry,
-          properties: {
-            geographyname: d.geographyname,
-            actualvalue: Number.isFinite(v) ? v : null,
-            _year: String(selectedYear), // tag the year (debug-friendly)
-          },
-        };
-      })
-      .filter(Boolean);
-
-    return { type: "FeatureCollection", features };
-  }, [raw, selectedYear, isTrending]);
-
-  // ---- IMPERATIVE CONTROL OF THE LAYER ----
-  const geoRef = useRef(null);
-
-  // when geoData changes, forcibly replace the layer contents
   useEffect(() => {
-    if (!geoRef.current || !geoData) return;
-    // blow away old layers so tooltips don't linger
-    geoRef.current.clearLayers();
-    // re-add with fresh properties; onEachFeature will rebind tooltips
-    geoRef.current.addData(geoData);
-  }, [geoData]);
+    fetch("../data/ByRegion.json")
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        const chartData = json
+          .filter((d) => d.periodlabel === selectedYear)
+          .map((d) => ({
+            name: d.geographyname,
+            value: d.actualvalue,
+          }));
+        setBarData(chartData.sort((a, b) => b.value - a.value));
+        console.log("Chart Data:", chartData);
+
+        const lineData = [];
+        const trendYears = ["1996", "2001", "2006", "2011", "2016"];
+
+        trendYears.forEach((rg) =>
+          json
+            .filter((d) => d.periodlabel === rg)
+            .forEach((d) => {
+              let yearData = lineData.find((td) => td.year === rg);
+              if (!yearData) {
+                yearData = {
+                  year: rg,
+                  [d.geographyname]: d.actualvalue,
+                };
+                lineData.push(yearData);
+              } else {
+                yearData[d.geographyname] = d.actualvalue;
+              }
+            })
+        );
+        setTrendData(lineData);
+        console.log("Trend Data:", lineData);
+      });
+  }, [selectedYear]);
 
   return (
     <>
@@ -191,70 +126,43 @@ export default function ByRegion() {
 
       {isTrending ? (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <LineChart data={trendData} style={{ width: "100%", height: "100%" }}>
+          <LineChart
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            responsive
+            data={trendData}
+            margin={{
+              top: 5,
+              right: 0,
+              left: 0,
+              bottom: 5,
+            }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
-            <YAxis padding={{ bottom: 60 }} domain={[15, "dataMax + 5"]} />
+            <YAxis width="auto" />
             <Tooltip />
             <Legend />
-            {Object.keys(trendData[0] || {})
-              .filter((k) => k !== "year")
-              .map((area) => (
-                <Line
-                  key={area}
-                  dataKey={area}
-                  type="monotone"
-                  dot={false}
-                  strokeWidth={8}
-                />
-              ))}
+            <Line
+              type="monotone"
+              dataKey="Strathcona"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+              strokeWidth={8}
+            />
+            <Line
+              type="monotone"
+              dataKey="Downtown"
+              stroke="#82ca9d"
+              strokeWidth={8}
+            />
           </LineChart>
         </div>
       ) : (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <div className="w-1/2 h-full min-h-[400px]">
-            <MapContainer
-              style={{ height: "100%", width: "100%" }}
-              center={[49.2527, -123.1507]}
-              zoom={13}
-              scrollWheelZoom={false}
-            >
-              <TileLayer
-                attribution="&copy; OpenStreetMap contributors"
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              {/* mount the GeoJSON once; we push fresh data via ref */}
-              <GeoJSON
-                ref={geoRef}
-                data={{ type: "FeatureCollection", features: [] }}
-                style={() => ({
-                  color: "#5EA61B",
-                  weight: 2,
-                  fillOpacity: 0.3,
-                })}
-                onEachFeature={(feature, layer) => {
-                  // always bind tooltip from current properties
-                  const name = feature.properties?.geographyname ?? "Unnamed";
-                  const rawVal = feature.properties?.actualvalue;
-                  const value =
-                    typeof rawVal === "number" ? rawVal : parseFloat(rawVal);
-                  layer.bindTooltip(
-                    `<strong>${name}</strong><br/>Value: ${
-                      Number.isFinite(value) ? value : "N/A"
-                    }`,
-                    { permanent: false }
-                  );
-                }}
-              />
-              <Marker position={[51.505, -0.09]}>
-                <Popup>
-                  A pretty CSS3 popup.
-                  <br />
-                  Easily customizable.
-                </Popup>
-              </Marker>
-            </MapContainer>
-          </div>
+          <div className="w-1/2 h-full min-h-[400px]"></div>
 
           <div className="w-1/2 h-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -264,7 +172,7 @@ export default function ByRegion() {
                 margin={{ top: 0, right: 0, bottom: 0, left: 72 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" domain={[0, "dataMax + 5"]} />
+                <XAxis type="number" domain={["dataMin - 5", "dataMax + 5"]} />
                 <YAxis
                   dataKey="name"
                   type="category"

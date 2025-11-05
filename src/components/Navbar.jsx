@@ -23,7 +23,7 @@ export function Navbar() {
             </NavLink>
           </li>
           <li>
-            <NavLink clasName="rounded-none" to="/housing-type">
+            <NavLink className="rounded-none" to="/housing-type">
               By Housing Type
             </NavLink>
           </li>
