@@ -245,13 +245,13 @@ export default function ByRegion() {
                 <span className="font-bold text-black">Select Areas</span>
                 <div className="flex gap-1 ml-2 flex-none">
                   <button
-                    className="btn btn-xs btn-success"
+                    className="btn btn-xs bg-[#2c6e49] text-white w-20 h-8"
                     onClick={() => setSelectedAreas(allAreas)}
                   >
                     All
                   </button>
                   <button
-                    className="btn btn-xs btn-error"
+                    className="btn btn-xs bg-red-800 text-white w-20 h-8"
                     onClick={() => setSelectedAreas([])}
                   >
                     None
