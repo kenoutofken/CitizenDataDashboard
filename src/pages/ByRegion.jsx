@@ -53,19 +53,29 @@ export default function ByRegion() {
   const trendData = useMemo(() => {
     if (!raw.length) return [];
 
-    const rows = raw.filter((d) => d.geolevelname === "Local Area");
+    const rows = raw.filter((d) => d.geolevelname === "Local Area"); // Local Area rows
+    const csdRow = raw.filter((d) => d.geolevelname === "CSD"); // CSD rows
 
     const years = [...new Set(rows.map((d) => String(d.periodlabel)))].sort(
       (a, b) => +a - +b
     );
 
-    let areas = [...new Set(rows.map((d) => d.geographyname))].sort();
+    // let areas = [...new Set(rows.map((d) => d.geographyname))].sort();
 
-    // filter to selected areas (if any)
+    // // filter to selected areas (if any)
+    // if (selectedAreas.length > 0) {
+    //   areas = areas.filter((a) => selectedAreas.includes(a));
+    // }
+
+    // Decide which local areas to show based on selectedAreas
+    let areas = [];
     if (selectedAreas.length > 0) {
-      areas = areas.filter((a) => selectedAreas.includes(a));
+      areas = [...selectedAreas].sort(); // only show selected areas
+    } else {
+      areas = []; // if none selected, show none
     }
 
+    // By year+area mapping
     const byYA = new Map();
     rows.forEach((d) => {
       const key = `${String(d.periodlabel)}||${d.geographyname}`;
@@ -76,8 +86,21 @@ export default function ByRegion() {
       byYA.set(key, v);
     });
 
+    // By CSD mapping
+    const byYearCSD = new Map(); // year -> csd value
+    csdRow.forEach((d) => {
+      const year = String(d.periodlabel);
+      const v =
+        typeof d.actualvalue === "number"
+          ? d.actualvalue
+          : parseFloat(d.actualvalue);
+      byYearCSD.set(year, v);
+    });
+
+    // Build final trend
     return years.map((y) => {
-      const row = { year: y };
+      const row = { year: y, "City Average": byYearCSD.get(y) ?? null }; // Include CSD
+      
       areas.forEach((a) => {
         row[a] = byYA.get(`${y}||${a}`) ?? null;
       });
@@ -312,12 +335,13 @@ export default function ByRegion() {
             <Legend />
             {Object.keys(trendData[0] || {})
               .filter((k) => k !== "year")
-              .map((area) => (
+              .map((key) => (
                 <Line
-                  key={area}
-                  dataKey={area}
+                  key={key}
+                  dataKey={key}
                   type="monotone"
                   dot={false}
+                  stroke={key === "City Average" ? "#2c6e49" : undefined} // Highlights CSD line with green
                   strokeWidth={8}
                 />
               ))}
