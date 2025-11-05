@@ -147,17 +147,18 @@ export default function ByHousingType() {
               padding={{ bottom: 60 }}
             />
             <Tooltip />
+            <Legend />
             <Line
               type="monotone"
               dataKey="Owned housing"
               stroke="#0279B1"
-              strokeWidth={12}
+              strokeWidth={8}
             />
             <Line
               type="monotone"
               dataKey="Rented housing"
               stroke="#5EA61B"
-              strokeWidth={12}
+              strokeWidth={8}
             />
           </LineChart>
         </div>

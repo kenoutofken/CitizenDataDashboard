@@ -18,6 +18,7 @@ import InfoCard from "../components/InfoCard.jsx";
 export default function ByRegion() {
   const [barData, setBarData] = useState([]);
   const [trendData, setTrendData] = useState([]);
+  const [geoData, setGeoData] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2016");
   const isTrending = selectedYear === "Trending";
 
@@ -57,8 +58,35 @@ export default function ByRegion() {
         );
         setTrendData(lineData);
         console.log("Trend Data:", lineData);
+
+        const geoData = {
+          type: "FeatureCollection",
+          features: json
+            .filter(
+              (d) =>
+                d.periodlabel === selectedYear &&
+                d.geolevelname === "Local Area"
+            )
+            .map((d) => {
+              const val =
+                typeof d.actualvalue === "number"
+                  ? d.actualvalue
+                  : parseFloat(d.actualvalue);
+
+              return {
+                type: "Feature",
+                geometry: d.geom?.geometry ?? d.geom,
+                properties: {
+                  geographyname: d.geographyname,
+                  actualvalue: Number.isFinite(val) ? val : null,
+                },
+              };
+            }),
+        };
+        setGeoData(geoData);
+        console.log("Geo Data:", geoData);
       });
-  }, [selectedYear]);
+  }, [selectedYear, setSelectedYear, setBarData, setTrendData, setGeoData]);
 
   return (
     <>
@@ -162,7 +190,33 @@ export default function ByRegion() {
         </div>
       ) : (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <div className="w-1/2 h-full min-h-[400px]"></div>
+          <div className="w-1/2 h-full min-h-[400px]">
+            <MapContainer
+              style={{ height: "100%", width: "100%" }}
+              center={[49.2527, -123.1507]}
+              zoom={12}
+              scrollWheelZoom={false}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <GeoJSON
+                key={`${selectedYear}-${geoData?.features?.length ?? 0}`}
+                data={geoData}
+                onEachFeature={(feature, layer) => {
+                  layer.bindTooltip(
+                    `<strong>${feature.properties.geographyname}</strong><br/>${feature.properties.actualvalue}%`,
+                    { sticky: true }
+                  );
+                }}
+              />
+              <Marker position={[51.505, -0.09]}>
+                <Popup>
+                  A pretty CSS3 popup.
+                  <br />
+                  Easily customizable.
+                </Popup>
+              </Marker>
+            </MapContainer>
+          </div>
 
           <div className="w-1/2 h-full">
             <ResponsiveContainer width="100%" height="100%">
