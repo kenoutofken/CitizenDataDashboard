@@ -152,13 +152,13 @@ export default function ByHousingType() {
               type="monotone"
               dataKey="Owned housing"
               stroke="#0279B1"
-              strokeWidth={8}
+              strokeWidth={4}
             />
             <Line
               type="monotone"
               dataKey="Rented housing"
               stroke="#5EA61B"
-              strokeWidth={8}
+              strokeWidth={4}
             />
           </LineChart>
         </div>
