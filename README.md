@@ -1,6 +1,8 @@
 
 # CITIZEN DATA DASHBOARD - A03 - FUNCTIONAL CODE
 
+By Ken Yau & Raizel Bacani
+
 The purpose of this project is to redesign the health city dashboard for households spending more than 30% of income on housing. It aims to support current Vancouver residents, potential newcomers, policymakers, non-profit organizations, and housing advocates by making complex housing data easier to understand and compare across neighbourhoods. The project will help stakeholders make more informed decisions about housing affordability, community planning, and resource allocation.
 
 Our main goal for this assignment is to create an interface for users to navigate this dataset in an intuitive and user friendly way. This project started with our team identifying issues with the layout and data visualization of the existing data dashboard. We took this analysis and build wireframes and prototypes to showcase our design solution. After receiving feedback on our prototype, we began the process of coding this project using React. Our tech stack for this project includes:

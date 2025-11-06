@@ -16,7 +16,7 @@ export default function InfoCard({ dataFile }) {
   }, [dataFile]);
 
   return (
-    <div className="grid grid-cols-3 gap-8 pt-12 px-12">
+    <div className="grid grid-cols-3 gap-8 pt-12 px-12 pt-32">
       {data.map((card) => (
         <div key={card.id} className="card bg-base-100 shadow-md py-8">
           <div className="card-body flex justify-between items-center text-center">

@@ -23,7 +23,7 @@ export default function ByRegion() {
   const isTrending = selectedYear === "Trending";
   const geoRef = useRef(null);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [regions, setRegions] = useState([]);
+  const [regions, setRegions] = useState(["CSD"]);
 
   useEffect(() => {
     if (!geoRef.current || !geoData?.features?.length) return;
@@ -373,7 +373,7 @@ export default function ByRegion() {
         </div>
       ) : (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <div className="w-1/2 h-full min-h-[400px]">
+          <div className="w-1/2 h-full min-h-[400px] relative z-0">
             <MapContainer
               style={{ height: "100%", width: "100%" }}
               center={[49.2527, -123.1507]}
@@ -417,10 +417,12 @@ export default function ByRegion() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={["dataMin - 5", "dataMax + 5"]} />
                 <YAxis
-                  dataKey="name"
+                  dataKey={(entry) =>
+                    entry.name === "CSD" ? "City Average (CSD)" : entry.name
+                  }
                   type="category"
-                  width={140}
-                  tick={{ fontSize: 16 }}
+                  width={180}
+                  tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
                 />
                 <Tooltip />
                 <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />

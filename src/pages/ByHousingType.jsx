@@ -163,7 +163,7 @@ export default function ByHousingType() {
                 dataKey="name"
                 type="category"
                 width={140}
-                tick={{ fontSize: 18 }}
+                tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
                 sorted={false}
               />
               <Tooltip />

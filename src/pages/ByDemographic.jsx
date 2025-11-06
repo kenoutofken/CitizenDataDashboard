@@ -118,15 +118,15 @@ export default function ByDemographic() {
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
+            margin={{ top: 16, right: 0, bottom: 16, left: 80 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={[0, "dataMax + 5"]} />
+            <XAxis type="number" domain={["dataMin -5", "dataMax + 5"]} />
             <YAxis
               dataKey="name"
               type="category"
-              width={140}
-              tick={{ fontSize: 12 }}
+              width={240}
+              tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
             />
             <Tooltip />
             <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />

@@ -6,6 +6,7 @@
 :root {
   --color-primary: #0279b1;
   --color-secondary: #5ea61b;
+  --text-base: 1rem;
 }
 
 /* ✅ Correct font clamp syntax */

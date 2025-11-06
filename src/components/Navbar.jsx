@@ -1,19 +1,28 @@
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  HomeIcon,
+  MapIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import { NavLink } from "react-router";
 
 export function Navbar() {
   return (
-    <div className="navbar top-0 left-0 right-0 z-50 bg-base-200 border-b-3 border-primary p-0">
+    <div className="navbar fixed top-0 left-0 right-0 z-50 bg-base-200 border-b-3 border-primary p-0">
       <div className="flex-none hidden md:block">
         <ul className="menu menu-horizontal px-0 py-0 ml-12 my-0">
           <li>
             <NavLink className="rounded-none" to="/">
-              <button className="btn btn-ghost btn-xl w-80">By Region</button>
+              <button className="btn btn-ghost btn-xl w-80">
+                <MapIcon className="h-6 w-6 inline-block mr-2" />
+                By Region
+              </button>
             </NavLink>
           </li>
           <li>
             <NavLink className="rounded-none" to="/demographic">
               <button className="btn btn-ghost btn-xl w-80">
+                <UserIcon className="h-6 w-6 inline-block mr-2" />
                 By Demographic
               </button>
             </NavLink>
@@ -21,6 +30,7 @@ export function Navbar() {
           <li>
             <NavLink className="rounded-none" to="/housing-type">
               <button className="btn btn-ghost btn-xl w-80">
+                <MapIcon className="h-6 w-6 inline-block mr-2" />
                 By Housing Type
               </button>
             </NavLink>
