@@ -199,136 +199,146 @@ export default function ByRegion() {
     <>
       <InfoCard dataFile="ByRegionCards.json" />
 
-      <div className="flex justify-end items-center gap-4 px-12">
-        {isTrending && (
-          <div className="dropdown dropdown-end dropdown-bottom">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-outline btn-lg bg-base-100 border-2"
-            >
-              Select Regions (Up to 5) ▼
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-200 text-base shadow-md"
-            >
-              <div className="grid grid-cols-2 gap-x-4">
-                {regionOptions.map((r) => (
-                  <label key={r} className="flex items-center gap-2 px-3 py-2">
-                    <input
-                      type="checkbox"
-                      checked={regions.includes(r)}
-                      onChange={() => toggleRegion(r)}
-                      className="checkbox checkbox-primary"
-                    />
-                    <span>{r === "CSD" ? "City Average (CSD)" : r}</span>
-                  </label>
-                ))}
-                <button
-                  onClick={() => setRegions([])}
-                  className="btn btn-warning btn-block text-base mt-2"
-                >
-                  Clear All
-                </button>
-              </div>
-            </ul>
-            <div className="toast toast-end z-50" id="toast-container"></div>
-          </div>
-        )}
-
-        {!isTrending && (
-          <div className="dropdown dropdown-end dropdown-bottom">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-outline btn-lg bg-base-100 border-2"
-            >
-              Sort Data by ▼
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-70 shadow-md"
-            >
-              <li>
-                <button
-                  onClick={() =>
-                    setBarData((data) =>
-                      [...data].sort((a, b) => a.name.localeCompare(b.name))
-                    )
-                  }
-                  className="pl-6 hover:bg-primary hover:text-white"
-                >
-                  A to Z
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() =>
-                    setBarData((data) =>
-                      [...data].sort((a, b) => b.value - a.value)
-                    )
-                  }
-                  className="pl-6 hover:bg-primary hover:text-white"
-                >
-                  Highest to Lowest
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() =>
-                    setBarData((data) =>
-                      [...data].sort((a, b) => a.value - b.value)
-                    )
-                  }
-                  className="pl-6 hover:bg-primary hover:text-white"
-                >
-                  Lowest to Highest
-                </button>
-              </li>
-            </ul>
-            <div className="toast toast-end" id="toast-container"></div>
-          </div>
-        )}
-
-        <div className="dropdown dropdown-end dropdown-bottomm">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-outline btn-lg bg-base-100 border-2"
-          >
-            View Data ({selectedYear}) ▼
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 border-2 rounded text-base mt-1 w-64 shadow-md"
-          >
-            <li>
-              <button
-                className="text-black font-bold hover:bg-primary hover:text-white"
-                onClick={() => setSelectedYear("Trending")}
+      <div className="flex justify-between items-center gap-4 px-12">
+        <span className="text-xl text-primary font-bold">
+          {isTrending
+            ? `Displaying Data Collected from 1996 - 2016`
+            : `Displaying Data Collected in ${selectedYear}`}
+        </span>
+        <div className="flex gap-4">
+          {isTrending && (
+            <div className="dropdown dropdown-end dropdown-bottom">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-outline btn-lg bg-base-100 border-2"
               >
-                View Data Trends
-              </button>
-            </li>
+                Select Regions (Up to 5) ▼
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-200 text-base shadow-md"
+              >
+                <div className="grid grid-cols-2 gap-x-4">
+                  {regionOptions.map((r) => (
+                    <label
+                      key={r}
+                      className="flex items-center gap-2 px-3 py-2"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={regions.includes(r)}
+                        onChange={() => toggleRegion(r)}
+                        className="checkbox checkbox-primary"
+                      />
+                      <span>{r === "CSD" ? "City Average (CSD)" : r}</span>
+                    </label>
+                  ))}
+                  <button
+                    onClick={() => setRegions([])}
+                    className="btn btn-warning btn-block text-base mt-2"
+                  >
+                    Clear All
+                  </button>
+                </div>
+              </ul>
+              <div className="toast toast-end z-50" id="toast-container"></div>
+            </div>
+          )}
 
-            <li className="menu-title">
-              <span className="text-black text-base font-bold">
-                View Data by Year
-              </span>
-            </li>
+          {!isTrending && (
+            <div className="dropdown dropdown-end dropdown-bottom">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-outline btn-lg bg-base-100 border-2"
+              >
+                Sort Data by ▼
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 border-2 rounded mt-1 text-base w-70 shadow-md"
+              >
+                <li>
+                  <button
+                    onClick={() =>
+                      setBarData((data) =>
+                        [...data].sort((a, b) => a.name.localeCompare(b.name))
+                      )
+                    }
+                    className="pl-6 hover:bg-primary hover:text-white"
+                  >
+                    A to Z
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setBarData((data) =>
+                        [...data].sort((a, b) => b.value - a.value)
+                      )
+                    }
+                    className="pl-6 hover:bg-primary hover:text-white"
+                  >
+                    Highest to Lowest
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() =>
+                      setBarData((data) =>
+                        [...data].sort((a, b) => a.value - b.value)
+                      )
+                    }
+                    className="pl-6 hover:bg-primary hover:text-white"
+                  >
+                    Lowest to Highest
+                  </button>
+                </li>
+              </ul>
+              <div className="toast toast-end" id="toast-container"></div>
+            </div>
+          )}
 
-            {years.map((year) => (
-              <li key={year}>
+          <div className="dropdown dropdown-end dropdown-bottomm">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline btn-lg bg-base-100 border-2"
+            >
+              View Data ({selectedYear}) ▼
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 border-2 rounded text-base mt-1 w-64 shadow-md"
+            >
+              <li>
                 <button
-                  onClick={() => setSelectedYear(year)}
-                  className="pl-6 hover:bg-primary hover:text-white"
+                  className="text-black font-bold hover:bg-primary hover:text-white"
+                  onClick={() => setSelectedYear("Trending")}
                 >
-                  {year}
+                  View Data Trends
                 </button>
               </li>
-            ))}
-          </ul>
+
+              <li className="menu-title">
+                <span className="text-black text-base font-bold">
+                  View Data by Year
+                </span>
+              </li>
+
+              {years.map((year) => (
+                <li key={year}>
+                  <button
+                    onClick={() => setSelectedYear(year)}
+                    className="pl-6 hover:bg-primary hover:text-white"
+                  >
+                    {year}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
       {isTrending ? (

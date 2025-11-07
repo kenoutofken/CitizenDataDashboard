@@ -13,13 +13,15 @@ function App() {
     <>
       <Header />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<ByRegion />} />
-        <Route path="/demographic" element={<ByDemographic />} />
-        <Route path="/housing-type" element={<ByHousingType />} />
-      </Routes>
-      <Rationale />
-      <IndicatorDetails />
+      <section className="flex flex-col bg-base-200 rounded-lg shadow-lg mx-12 mb-12">
+        <Routes>
+          <Route path="/" element={<ByRegion />} />
+          <Route path="/demographic" element={<ByDemographic />} />
+          <Route path="/housing-type" element={<ByHousingType />} />
+        </Routes>
+        <Rationale />
+        <IndicatorDetails />
+      </section>
     </>
   );
 }

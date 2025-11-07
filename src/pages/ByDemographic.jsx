@@ -41,81 +41,91 @@ export default function ByDemographic() {
     <>
       <InfoCard dataFile="ByDemographicCards.json" />
 
-      <div className="flex justify-end items-center gap-4 px-12">
-        <div className="dropdown dropdown-bottom dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-outline btn-lg border-2 bg-base-100"
-          >
-            Sort Data by ▼
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
-          >
-            <li>
-              <button
-                onClick={() =>
-                  setData((data) =>
-                    [...data].sort((a, b) => a.name.localeCompare(b.name))
-                  )
-                }
-                className="pl-6 hover:bg-primary hover:text-white"
-              >
-                A to Z
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() =>
-                  setData((data) => [...data].sort((a, b) => b.value - a.value))
-                }
-                className="pl-6 hover:bg-primary hover:text-white"
-              >
-                Highest to Lowest
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() =>
-                  setData((data) => [...data].sort((a, b) => a.value - b.value))
-                }
-                className="pl-6 hover:bg-primary hover:text-white"
-              >
-                Lowest to Highest
-              </button>
-            </li>
-          </ul>
-          <div className="toast toast-end" id="toast-container"></div>
-        </div>
+      <div className="flex justify-between items-center gap-4 px-12">
+        <span className="text-xl text-primary font-bold">
+          Displaying Data Collected in {selectedYear}
+        </span>
 
-        <div className="dropdown dropdown-bottom dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-outline btn-lg border-2 bg-base-100 text-base"
-          >
-            View Data ({selectedYear}) ▼
+        <div className="flex justify-end items-center gap-4 px-12">
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline btn-lg border-2 bg-base-100"
+            >
+              Sort Data by ▼
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
+            >
+              <li>
+                <button
+                  onClick={() =>
+                    setData((data) =>
+                      [...data].sort((a, b) => a.name.localeCompare(b.name))
+                    )
+                  }
+                  className="pl-6 hover:bg-primary hover:text-white"
+                >
+                  A to Z
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() =>
+                    setData((data) =>
+                      [...data].sort((a, b) => b.value - a.value)
+                    )
+                  }
+                  className="pl-6 hover:bg-primary hover:text-white"
+                >
+                  Highest to Lowest
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() =>
+                    setData((data) =>
+                      [...data].sort((a, b) => a.value - b.value)
+                    )
+                  }
+                  className="pl-6 hover:bg-primary hover:text-white"
+                >
+                  Lowest to Highest
+                </button>
+              </li>
+            </ul>
+            <div className="toast toast-end" id="toast-container"></div>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 text-base w-64 shadow-md"
-          >
-            <li className="menu-title">
-              <span className="text-black font-bold text-base">
-                View Data by Year
-              </span>
-            </li>
-            <li>
-              <button
-                onClick={() => setSelectedYear("2016")}
-                className="pl-6 hover:bg-primary hover:text-white"
-              >
-                2016 (Latest)
-              </button>
-            </li>
-          </ul>
+
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline btn-lg border-2 bg-base-100 text-base"
+            >
+              View Data ({selectedYear}) ▼
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 text-base w-64 shadow-md"
+            >
+              <li className="menu-title">
+                <span className="text-black font-bold text-base">
+                  View Data by Year
+                </span>
+              </li>
+              <li>
+                <button
+                  onClick={() => setSelectedYear("2016")}
+                  className="pl-6 hover:bg-primary hover:text-white"
+                >
+                  2016 (Latest)
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 

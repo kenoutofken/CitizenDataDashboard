@@ -82,45 +82,53 @@ export default function ByHousingType() {
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
-      <div className="flex justify-end items-center gap-4 px-12">
-        <div className="dropdown dropdown-bottom dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-outline btn-lg border-2 text-base bg-base-100"
-          >
-            View Data ({selectedYear}) ▼
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
-          >
-            <li>
-              <button
-                className="text-black font-bold hover:bg-primary hover:text-white"
-                onClick={() => setSelectedYear("Trending")}
-              >
-                View Data Trends
-              </button>
-            </li>
+      <div className="flex justify-between items-center gap-4 px-12">
+        <span className="text-xl text-primary font-bold">
+          {isTrending
+            ? `Displaying Data Collected from 1996 - 2016`
+            : `Displaying Data Collected in ${selectedYear}`}
+        </span>
 
-            <li className="menu-title">
-              <span className="text-black font-bold text-base">
-                View Data by Year
-              </span>
-            </li>
-
-            {years.map((year) => (
-              <li key={year}>
+        <div className="flex justify-end items-center gap-4 px-12">
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-outline btn-lg border-2 text-base bg-base-100"
+            >
+              View Data ({selectedYear}) ▼
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
+            >
+              <li>
                 <button
-                  onClick={() => setSelectedYear(year)}
-                  className="pl-6 text-base hover:bg-primary hover:text-white"
+                  className="text-black font-bold hover:bg-primary hover:text-white"
+                  onClick={() => setSelectedYear("Trending")}
                 >
-                  {year}
+                  View Data Trends
                 </button>
               </li>
-            ))}
-          </ul>
+
+              <li className="menu-title">
+                <span className="text-black font-bold text-base">
+                  View Data by Year
+                </span>
+              </li>
+
+              {years.map((year) => (
+                <li key={year}>
+                  <button
+                    onClick={() => setSelectedYear(year)}
+                    className="pl-6 text-base hover:bg-primary hover:text-white"
+                  >
+                    {year}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 

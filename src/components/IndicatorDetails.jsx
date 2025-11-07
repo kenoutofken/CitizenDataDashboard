@@ -4,27 +4,27 @@ export default function IndicatorDetails() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-15 card bg-base-100 flex-1 shadow-lg pt-6 pb-6 px-6">
         {/* LEFT COLUMN */}
         <div>
-          <h2 className="text-[32px] font-semibold mb-3">Current Status</h2>
+          <h2 className="text-xl font-semibold mb-3">Current Status</h2>
           <div className="badge badge-warning gap-2 mb-6 text-sm p-5">
             ✖ NEEDS IMPROVING
           </div>
 
-          <h3 className="text-[32px] font-semibold mb-2">Key Partners</h3>
-          <p className="text-gray-700 text-base mb-3">
+          <h3 className="text-xl font-semibold mb-2">Key Partners</h3>
+          <p className="text-base mb-3">
             Meeting our target requires support from:
           </p>
           <div className="flex flex-wrap gap-2 mb-6">
-            <div className="badge bg-[#D9D9D5] p-3">Federal government</div>
-            <div className="badge bg-[#D9D9D5] p-3">Provincial government</div>
-            <div className="badge bg-[#D9D9D5] p-3">
+            <div className="badge bg-[#404040] p-3">Federal government</div>
+            <div className="badge bg-[#404040] p-3">Provincial government</div>
+            <div className="badge bg-[#404040] p-3">
               Regional government and services
             </div>
           </div>
 
-          <h3 className="text-[32px] font-semibold mb-2">
+          <h3 className="text-xl font-semibold mb-2">
             Ask questions and give feedback
           </h3>
-          <p className="text-gray-700 text-base mb-3">
+          <p className="text-base mb-3">
             Meeting our target requires support from:
           </p>
           <button className="btn bg-[#0279B1] text-white">Contact us</button>
@@ -32,13 +32,11 @@ export default function IndicatorDetails() {
 
         {/* RIGHT COLUMN */}
         <div>
-          <h2 className="text-[32px] font-semibold mb-3">
+          <h2 className="text-xl font-semibold mb-3">
             Sustainable Development Goals
           </h2>
-          <p className="text-gray-700 text-base mb-2">
-            This indicator aligns with:
-          </p>
-          <div className="badge bg-[#D9D9D5] p-3 mb-6">
+          <p className="text-base mb-2">This indicator aligns with:</p>
+          <div className="badge bg-[#404040] p-3 mb-6">
             Sustainable cities and communities
           </div>
 
