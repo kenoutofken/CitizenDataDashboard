@@ -41,18 +41,18 @@ export default function ByDemographic() {
     <>
       <InfoCard dataFile="ByDemographicCards.json" />
 
-      <div className="flex w-full">
-        <div className="dropdown dropdown-bottom left-[50px] px-12 ml-auto flex justify-end">
+      <div className="flex justify-end items-center gap-4 px-12">
+        <div className="dropdown dropdown-bottom dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-outline bg-base-100"
+            className="btn btn-outline btn-lg border-2 bg-base-100"
           >
             Sort Data by ▼
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content relative z-50 menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
+            className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
           >
             <li>
               <button
@@ -90,20 +90,22 @@ export default function ByDemographic() {
           <div className="toast toast-end" id="toast-container"></div>
         </div>
 
-        <div className="dropdown dropdown-bottom px-12 flex justify-end">
+        <div className="dropdown dropdown-bottom dropdown-end">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-outline bg-base-100"
+            className="btn btn-outline btn-lg border-2 bg-base-100 text-base"
           >
             View Data ({selectedYear}) ▼
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content relative z-50 menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
+            className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 text-base w-64 shadow-md"
           >
             <li className="menu-title">
-              <span className="text-black font-bold">View Data by Year</span>
+              <span className="text-black font-bold text-base">
+                View Data by Year
+              </span>
             </li>
             <li>
               <button
@@ -117,7 +119,7 @@ export default function ByDemographic() {
         </div>
       </div>
 
-      <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
+      <div className="flex h-[calc(50vh)] pt-12 px-12">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

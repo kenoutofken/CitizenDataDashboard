@@ -6,13 +6,23 @@
 :root {
   --color-primary: #0279b1;
   --color-secondary: #5ea61b;
-  --text-base: 1rem;
+  --text-base: clamp(14px, 0.7vw, 24px);
+  --text-lg: clamp(22px, 0.9vw, 32px);
+  --text-xl: clamp(26px, 1vw, 36px);
 }
 
 /* ✅ Correct font clamp syntax */
 html {
-  font-size: clamp(0.7rem, 0.7vw, 3rem);
+  font-family: "Montserrat Variable", sans-serif;
+  font-size: clamp(14px, 0.5vw, 20px);
   @apply bg-base-200;
+}
+
+.recharts-text {
+  font-family: "Montserrat Variable", sans-serif;
+  font-size: clamp(14px, 0.7vw, 24px);
+  font-weight: 500;
+  fill: #333;
 }
 
 a.active {
@@ -21,7 +31,7 @@ a.active {
 
 a.active::after {
   content: "▼"; /* The arrow symbol */
-  font-size: 2rem; /* Make it smaller */
+  font-size: 1rem; /* Make it smaller */
   margin-left: 0.5em; /* Add a little spacing */
   display: inline-block; /* So it sits nicely next to text */
   color: #0279b1;

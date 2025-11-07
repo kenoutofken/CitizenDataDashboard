@@ -1,8 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function InfoCard({ dataFile }) {
   const [data, setData] = useState([]);
   const [showCards, setShowCards] = useState(true);
+  const card = useRef();
+
+  useGSAP(() => {
+    gsap.fromTo(
+      card.current,
+      {
+        opacity: 0,
+        y: 550,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+      }
+    );
+  }, [showCards]);
 
   useEffect(() => {
     if (!dataFile) return;
@@ -36,17 +58,17 @@ export default function InfoCard({ dataFile }) {
             className="toggle toggle-black toggle-xs"
             onChange={() => setShowCards(!showCards)}
           />
-          <span className="text-xl">Show / Hide Cards</span>
+          <span className="text-base">Show / Hide Cards</span>
         </div>
         {showCards && (
-          <div className="grid grid-cols-3 gap-8 pt-12 px-12">
+          <div ref={card} className="grid grid-cols-3 gap-8 pt-12 px-12">
             {data.map((card) => (
               <div key={card.id} className="card bg-base-100 shadow-md py-8">
                 <div className="card-body flex justify-between items-center text-center">
                   <h2 className="text-7xl font-bold text-primary">
                     {card.value}
                   </h2>
-                  <p className="text-xl">{card.description}</p>
+                  <p className="text-base">{card.description}</p>
                 </div>
               </div>
             ))}

@@ -82,42 +82,50 @@ export default function ByHousingType() {
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
-      <div className="dropdown dropdown-bottom px-12 flex justify-end">
-        <div tabIndex={0} role="button" className="btn btn-outline bg-base-100">
-          View Data ({selectedYear}) ▼
-        </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
-        >
-          <li>
-            <button
-              className="text-black font-bold hover:bg-primary hover:text-white"
-              onClick={() => setSelectedYear("Trending")}
-            >
-              View Data Trends
-            </button>
-          </li>
-
-          <li className="menu-title">
-            <span className="text-black font-bold">View Data by Year</span>
-          </li>
-
-          {years.map((year) => (
-            <li key={year}>
+      <div className="flex justify-end items-center gap-4 px-12">
+        <div className="dropdown dropdown-bottom dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-outline btn-lg border-2 text-base bg-base-100"
+          >
+            View Data ({selectedYear}) ▼
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
+          >
+            <li>
               <button
-                onClick={() => setSelectedYear(year)}
-                className="pl-6 hover:bg-primary hover:text-white"
+                className="text-black font-bold hover:bg-primary hover:text-white"
+                onClick={() => setSelectedYear("Trending")}
               >
-                {year}
+                View Data Trends
               </button>
             </li>
-          ))}
-        </ul>
+
+            <li className="menu-title">
+              <span className="text-black font-bold text-base">
+                View Data by Year
+              </span>
+            </li>
+
+            {years.map((year) => (
+              <li key={year}>
+                <button
+                  onClick={() => setSelectedYear(year)}
+                  className="pl-6 text-base hover:bg-primary hover:text-white"
+                >
+                  {year}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       {isTrending ? (
-        <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
+        <div className="flex h-[calc(50vh)] pt-12 px-12">
           <LineChart data={trendData} style={{ width: "100%", height: "100%" }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />

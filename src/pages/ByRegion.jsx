@@ -52,6 +52,15 @@ export default function ByRegion() {
     });
   }, [geoData, selectedYear]);
 
+  useEffect(() => {
+    if (geoRef.current && geoRef.current.getBounds) {
+      const bounds = geoRef.current.getBounds();
+      if (bounds.isValid()) {
+        geoRef.current._map.fitBounds(bounds, { padding: [10, 10] });
+      }
+    }
+  }, [geoData, refreshKey]);
+
   const lineColors = ["#0279b1", "#5EA61B", "#FFB100", "#FC60A8", "#7A28CB"];
 
   useEffect(() => {
@@ -146,7 +155,7 @@ export default function ByRegion() {
 
     // Create a new toast element
     const toast = document.createElement("div");
-    toast.className = "alert alert-warning shadow-lg text-sm";
+    toast.className = "alert alert-warning shadow-lg text-base text-black";
     toast.innerHTML = `
     <span>⚠️ ${message}</span>
   `;
@@ -190,19 +199,19 @@ export default function ByRegion() {
     <>
       <InfoCard dataFile="ByRegionCards.json" />
 
-      <div className="flex justify-end relative">
+      <div className="flex justify-end items-center gap-4 px-12">
         {isTrending && (
-          <div className="dropdown dropdown-bottom px-12 left-[50px] flex justify-end">
+          <div className="dropdown dropdown-end dropdown-bottom">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-outline bg-base-100"
+              className="btn btn-outline btn-lg bg-base-100 border-2"
             >
               Select Regions (Up to 5) ▼
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-200 shadow-md"
+              className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-200 text-base shadow-md"
             >
               <div className="grid grid-cols-2 gap-x-4">
                 {regionOptions.map((r) => (
@@ -218,28 +227,28 @@ export default function ByRegion() {
                 ))}
                 <button
                   onClick={() => setRegions([])}
-                  className="btn btn-warning btn-block mt-2"
+                  className="btn btn-warning btn-block text-base mt-2"
                 >
                   Clear All
                 </button>
               </div>
             </ul>
-            <div className="toast toast-end" id="toast-container"></div>
+            <div className="toast toast-end z-50" id="toast-container"></div>
           </div>
         )}
 
         {!isTrending && (
-          <div className="dropdown dropdown-bottom px-12 flex left-[50px] justify-end">
+          <div className="dropdown dropdown-end dropdown-bottom">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-outline bg-base-100"
+              className="btn btn-outline btn-lg bg-base-100 border-2"
             >
               Sort Data by ▼
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-70 shadow-md"
+              className="dropdown-content menu bg-base-100 border-2 rounded mt-1 w-70 shadow-md"
             >
               <li>
                 <button
@@ -282,17 +291,17 @@ export default function ByRegion() {
           </div>
         )}
 
-        <div className="dropdown dropdown-bottom px-12 flex justify-end">
+        <div className="dropdown dropdown-end dropdown-bottomm">
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-outline bg-base-100"
+            className="btn btn-outline btn-lg bg-base-100 border-2"
           >
             View Data ({selectedYear}) ▼
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
+            className="dropdown-content menu bg-base-100 border-2 rounded text-base mt-1 w-64 shadow-md"
           >
             <li>
               <button
@@ -304,7 +313,9 @@ export default function ByRegion() {
             </li>
 
             <li className="menu-title">
-              <span className="text-black font-bold">View Data by Year</span>
+              <span className="text-black text-base font-bold">
+                View Data by Year
+              </span>
             </li>
 
             {years.map((year) => (
@@ -321,7 +332,7 @@ export default function ByRegion() {
         </div>
       </div>
       {isTrending ? (
-        <div className="flex h-[calc(100vh-12rem)] pt-8 px-12">
+        <div className="flex h-[calc(70vh)] pt-8 px-12">
           <div className="relative isolate w-full overflow-hidden">
             {regions.length === 0 && (
               <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
@@ -444,7 +455,7 @@ export default function ByRegion() {
               <BarChart
                 data={barData}
                 layout="vertical"
-                margin={{ top: 0, right: 0, bottom: 0, left: 72 }}
+                margin={{ top: 0, right: 0, bottom: 0, left: 144 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, "dataMax + 5"]} />

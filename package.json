@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/montserrat": "^5.2.8",
+    "@gsap/react": "^2.1.2",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.13",
     "framer-motion": "^12.23.22",
+    "gsap": "^3.13.0",
     "leaflet": "^1.9.4",
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
