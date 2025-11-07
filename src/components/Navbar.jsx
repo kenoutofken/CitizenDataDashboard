@@ -9,9 +9,9 @@ import { NavLink } from "react-router";
 export function Navbar() {
   return (
     <>
-      <div className="top-4 z-50 bg-base-200 border-b-2 mx-12 mt-10 max-w-7xl border-primary p-0">
+      <div className="bg-base-200 border-b-2 mx-12 mt-10 border-primary p-0">
         <div className="flex-none hidden md:block">
-          <ul className="menu menu-horizontal px-0 py-0 ml-12 my-0">
+          <ul className="menu menu-horizontal px-0 py-0 my-0">
             <li>
               <NavLink className="rounded-none" to="/">
                 <button className="btn btn-ghost btn-xl w-80">
