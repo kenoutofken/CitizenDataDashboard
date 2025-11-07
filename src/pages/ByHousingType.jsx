@@ -171,7 +171,7 @@ export default function ByHousingType() {
                   <Cell
                     key={entry.name}
                     fill={
-                      entry.name === "Owned housing" ? "#5EA61B" : "#0279b1"
+                      entry.name === "Owned housing" ? "#0279b1" : "#5EA61B"
                     }
                   />
                 ))}
