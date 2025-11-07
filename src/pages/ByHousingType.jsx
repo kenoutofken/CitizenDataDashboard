@@ -117,7 +117,7 @@ export default function ByHousingType() {
 
       {isTrending ? (
         <div className="flex h-[calc(100vh-12rem)] pt-12 px-12">
-          <AreaChart data={trendData} style={{ width: "100%", height: "100%" }}>
+          <LineChart data={trendData} style={{ width: "100%", height: "100%" }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
             <YAxis domain={[0, "dataMax + 5"]} padding={{ bottom: 0 }} />
@@ -129,7 +129,7 @@ export default function ByHousingType() {
                 paddingTop: "10px",
               }}
             />
-            <Area
+            <Line
               type="monotone"
               dataKey="Owned housing"
               stroke="#0279B1"
@@ -138,7 +138,7 @@ export default function ByHousingType() {
               strokeWidth={4}
               dot={true}
             />
-            <Area
+            <Line
               type="monotone"
               dataKey="Rented housing"
               stroke="#5EA61B"
@@ -147,7 +147,7 @@ export default function ByHousingType() {
               strokeWidth={4}
               dot={true}
             />
-          </AreaChart>
+          </LineChart>
         </div>
       ) : (
         <div className="flex h-[calc(50vh)] pt-12 px-12">

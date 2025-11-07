@@ -16,15 +16,27 @@ export default function InfoCard({ dataFile }) {
   }, [dataFile]);
 
   return (
-    <div className="grid grid-cols-3 gap-8 pt-12 px-12 pt-32">
-      {data.map((card) => (
-        <div key={card.id} className="card bg-base-100 shadow-md py-8">
-          <div className="card-body flex justify-between items-center text-center">
-            <h2 className="text-7xl font-bold text-primary">{card.value}</h2>
-            <p className="text-gray-700 text-xl">{card.description}</p>
+    <>
+      <h1 className="text-5xl font-bold gap-8 pt-12 px-12">
+        Households spending over 30% of income on housing<br></br>
+        <span className="text-primary text-4xl font-semibold">
+          {dataFile === "ByDemographicCards.json"
+            ? "Data from various surveyed demographic groups"
+            : dataFile === "ByHousingTypeCards.json"
+            ? "Data by different housing types (owned vs rented)"
+            : "Data from regions throughout the City of Vancouver"}
+        </span>
+      </h1>
+      <div className="grid grid-cols-3 gap-8 pt-12 px-12">
+        {data.map((card) => (
+          <div key={card.id} className="card bg-base-100 shadow-md py-8">
+            <div className="card-body flex justify-between items-center text-center">
+              <h2 className="text-7xl font-bold text-primary">{card.value}</h2>
+              <p className="text-gray-700 text-xl">{card.description}</p>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import {
   BarChart,
   Bar,
+  Cell,
   CartesianGrid,
   LineChart,
   Line,
@@ -24,6 +25,7 @@ export default function ByRegion() {
   const geoRef = useRef(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [regions, setRegions] = useState(["CSD"]);
+  const [hoverRegion, setHoverRegion] = useState("CSD");
 
   useEffect(() => {
     if (!geoRef.current || !geoData?.features?.length) return;
@@ -384,17 +386,43 @@ export default function ByRegion() {
               <GeoJSON
                 key={`${refreshKey}`}
                 data={geoData}
-                fillColor="#0279b1"
-                weight={1}
-                opacity={1}
-                color="white"
-                fillOpacity={0.7}
+                style={(feature) => ({
+                  color: "#0279b1",
+                  weight: 2,
+                  fillColor:
+                    hoverRegion === feature?.properties?.geographyname
+                      ? "#5EA61B"
+                      : "white",
+                  fillOpacity:
+                    hoverRegion === feature?.properties?.geographyname
+                      ? 0.7
+                      : 0.1,
+                })}
                 ref={geoRef}
                 onEachFeature={(feature, layer) => {
                   layer.bindTooltip(
                     `<strong>${feature.properties.geographyname}</strong><br/>${feature.properties.actualvalue}%`,
                     { sticky: true }
                   );
+                  // Mouseover (hover)
+                  layer.on("mouseover", () => {
+                    layer.setStyle({
+                      fillColor: "#0279b1", // hover color
+                      weight: 2,
+                      fillOpacity: 0.7,
+                    });
+                    setHoverRegion(feature.properties.geographyname);
+                  });
+
+                  // Mouseout (reset)
+                  layer.on("mouseout", () => {
+                    layer.setStyle({
+                      fillColor: "white",
+                      weight: 2,
+                      fillOpacity: 0.1,
+                    });
+                    setHoverRegion(null);
+                  });
                 }}
               />
               <Marker position={[51.505, -0.09]}>
@@ -425,7 +453,18 @@ export default function ByRegion() {
                   tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
                 />
                 <Tooltip />
-                <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="value"
+                  onMouseOver={(data) => setHoverRegion(data.name)}
+                  onMouseOut={() => setHoverRegion(null)}
+                >
+                  {barData.map((entry) => (
+                    <Cell
+                      key={entry.name}
+                      fill={hoverRegion === entry.name ? "#5EA61B" : "#0279b1"}
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
