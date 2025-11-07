@@ -16,5 +16,17 @@ html {
 }
 
 a.active {
-  @apply bg-primary text-white hover:bg-transparent hover:shadow-none hover:text-white;
+  @apply bg-primary relative text-white hover:bg-transparent hover:shadow-none hover:text-white;
+}
+
+a.active::after {
+  content: "▼"; /* The arrow symbol */
+  font-size: 2rem; /* Make it smaller */
+  margin-left: 0.5em; /* Add a little spacing */
+  display: inline-block; /* So it sits nicely next to text */
+  color: #0279b1;
+  left: 50%;
+  bottom: 100%;
+  transform: translate(-100%, 0); /* centers horizontally */
+  position: absolute; /* Optional: vertically center it a bit */
 }

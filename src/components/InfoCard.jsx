@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function InfoCard({ dataFile }) {
   const [data, setData] = useState([]);
+  const [showCards, setShowCards] = useState(true);
 
   useEffect(() => {
     if (!dataFile) return;
@@ -17,26 +18,41 @@ export default function InfoCard({ dataFile }) {
 
   return (
     <>
-      <h1 className="text-5xl font-bold gap-8 pt-12 px-12">
-        Households spending over 30% of income on housing<br></br>
-        <span className="text-primary text-4xl font-semibold">
-          {dataFile === "ByDemographicCards.json"
-            ? "Data from various surveyed demographic groups"
-            : dataFile === "ByHousingTypeCards.json"
-            ? "Data by different housing types (owned vs rented)"
-            : "Data from regions throughout the City of Vancouver"}
-        </span>
-      </h1>
-      <div className="grid grid-cols-3 gap-8 pt-12 px-12">
-        {data.map((card) => (
-          <div key={card.id} className="card bg-base-100 shadow-md py-8">
-            <div className="card-body flex justify-between items-center text-center">
-              <h2 className="text-7xl font-bold text-primary">{card.value}</h2>
-              <p className="text-gray-700 text-xl">{card.description}</p>
-            </div>
+      <section className="pb-16">
+        <h1 className="text-5xl font-bold gap-8 pt-12 px-12">
+          Households spending over 30% of income on housing<br></br>
+          <span className="text-primary text-4xl font-semibold">
+            {dataFile === "ByDemographicCards.json"
+              ? "Data from various surveyed demographic groups"
+              : dataFile === "ByHousingTypeCards.json"
+              ? "Data by different housing types (owned vs rented)"
+              : "Data from regions throughout the City of Vancouver"}
+          </span>
+        </h1>
+        <div className="flex justify-start items-center gap-3 pt-12 px-12">
+          <input
+            type="checkbox"
+            defaultChecked
+            className="toggle toggle-black toggle-xs"
+            onChange={() => setShowCards(!showCards)}
+          />
+          <span className="text-xl">Show / Hide Cards</span>
+        </div>
+        {showCards && (
+          <div className="grid grid-cols-3 gap-8 pt-12 px-12">
+            {data.map((card) => (
+              <div key={card.id} className="card bg-base-100 shadow-md py-8">
+                <div className="card-body flex justify-between items-center text-center">
+                  <h2 className="text-7xl font-bold text-primary">
+                    {card.value}
+                  </h2>
+                  <p className="text-xl">{card.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        )}
+      </section>
     </>
   );
 }

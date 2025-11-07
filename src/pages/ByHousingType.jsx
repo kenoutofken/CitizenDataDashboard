@@ -4,6 +4,7 @@ import {
   BarChart,
   Bar,
   CartesianGrid,
+  Cell,
   LineChart,
   Line,
   Legend,
@@ -81,7 +82,7 @@ export default function ByHousingType() {
     <>
       <InfoCard dataFile="ByHousingTypeCards.json" />
 
-      <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+      <div className="dropdown dropdown-bottom px-12 flex justify-end">
         <div tabIndex={0} role="button" className="btn btn-outline bg-base-100">
           View Data ({selectedYear}) ▼
         </div>
@@ -133,19 +134,17 @@ export default function ByHousingType() {
               type="monotone"
               dataKey="Owned housing"
               stroke="#0279B1"
-              fill="#0279B1"
               stackId="1"
               strokeWidth={4}
-              dot={true}
+              dot={{ r: 10 }}
             />
             <Line
               type="monotone"
               dataKey="Rented housing"
               stroke="#5EA61B"
-              fill="#5EA61B"
               stackId="1"
               strokeWidth={4}
-              dot={true}
+              dot={{ r: 10 }}
             />
           </LineChart>
         </div>
@@ -155,10 +154,10 @@ export default function ByHousingType() {
             <BarChart
               data={data}
               layout="horizontal"
-              margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
+              margin={{ top: 16, right: 0, bottom: 16, left: 16 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <YAxis type="number" domain={["dataMin - 5", "dataMax + 5"]} />
+              <YAxis type="number" domain={[0, "dataMax + 5"]} />
               <XAxis
                 dataKey="name"
                 type="category"
@@ -167,7 +166,16 @@ export default function ByHousingType() {
                 sorted={false}
               />
               <Tooltip />
-              <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]}>
+                {data.map((entry) => (
+                  <Cell
+                    key={entry.name}
+                    fill={
+                      entry.name === "Owned housing" ? "#5EA61B" : "#0279b1"
+                    }
+                  />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -2,6 +2,7 @@ import {
   BarChart,
   Bar,
   CartesianGrid,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -23,10 +24,15 @@ export default function ByDemographic() {
         const chartData = json
           .filter((d) => d.periodlabel === "2016") // filter optional
           .map((d) => ({
-            name: d.disaggregationcategory, // y-axis label
+            name:
+              d.disaggregationcategory === "All"
+                ? "City Average"
+                : d.disaggregationcategory, // y-axis label
             value: d.actualvalue, // bar value
-          }));
+          }))
+          .sort((a, b) => b.value - a.value);
         setData(chartData);
+        console.log("Chart Data:", chartData);
       })
       .catch((err) => console.error("Error fetching data:", err));
   }, []);
@@ -35,8 +41,8 @@ export default function ByDemographic() {
     <>
       <InfoCard dataFile="ByDemographicCards.json" />
 
-      <div className="flex justify-end relative">
-        <div className="left-16 dropdown dropdown-bottom pt-20 px-8 flex justify-end">
+      <div className="flex w-full">
+        <div className="dropdown dropdown-bottom left-[50px] px-12 ml-auto flex justify-end">
           <div
             tabIndex={0}
             role="button"
@@ -46,7 +52,7 @@ export default function ByDemographic() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 border border-base-content rounded-box mt-1 w-70 shadow-md"
+            className="dropdown-content relative z-50 menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
           >
             <li>
               <button
@@ -84,7 +90,7 @@ export default function ByDemographic() {
           <div className="toast toast-end" id="toast-container"></div>
         </div>
 
-        <div className="dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+        <div className="dropdown dropdown-bottom px-12 flex justify-end">
           <div
             tabIndex={0}
             role="button"
@@ -94,12 +100,10 @@ export default function ByDemographic() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 border border-base-content rounded-box w-64 shadow-md"
+            className="dropdown-content relative z-50 menu bg-base-100 border border-base-content rounded-box mt-1 w-64 shadow-md"
           >
-            <li>
-              <li className="menu-title">
-                <span className="text-black font-bold">View Data by Year</span>
-              </li>
+            <li className="menu-title">
+              <span className="text-black font-bold">View Data by Year</span>
             </li>
             <li>
               <button
@@ -121,7 +125,7 @@ export default function ByDemographic() {
             margin={{ top: 16, right: 0, bottom: 16, left: 80 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={["dataMin -5", "dataMax + 5"]} />
+            <XAxis type="number" domain={[0, "dataMax + 5"]} />
             <YAxis
               dataKey="name"
               type="category"
@@ -129,7 +133,14 @@ export default function ByDemographic() {
               tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
             />
             <Tooltip />
-            <Bar dataKey="value" fill="#0279b1" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+              {data.map((entry) => (
+                <Cell
+                  key={entry.name}
+                  fill={entry.name === "City Average" ? "#FFB100" : "#0279b1"}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>

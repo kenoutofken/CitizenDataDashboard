@@ -52,7 +52,7 @@ export default function ByRegion() {
     });
   }, [geoData, selectedYear]);
 
-  const lineColors = ["#8884d8", "#82ca9d", "#ff7300", "#0279B1", "#5EA61B"];
+  const lineColors = ["#0279b1", "#5EA61B", "#FFB100", "#FC60A8", "#7A28CB"];
 
   useEffect(() => {
     fetch("data/ByRegion.json")
@@ -192,7 +192,7 @@ export default function ByRegion() {
 
       <div className="flex justify-end relative">
         {isTrending && (
-          <div className="left-16 dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+          <div className="dropdown dropdown-bottom px-12 left-[50px] flex justify-end">
             <div
               tabIndex={0}
               role="button"
@@ -229,7 +229,7 @@ export default function ByRegion() {
         )}
 
         {!isTrending && (
-          <div className="left-16 dropdown dropdown-bottom pt-20 px-12 flex justify-end">
+          <div className="dropdown dropdown-bottom px-12 flex left-[50px] justify-end">
             <div
               tabIndex={0}
               role="button"
@@ -282,7 +282,7 @@ export default function ByRegion() {
           </div>
         )}
 
-        <div className="dropdown dropdown-bottom pt-20 px-8 flex justify-end">
+        <div className="dropdown dropdown-bottom px-12 flex justify-end">
           <div
             tabIndex={0}
             role="button"
@@ -348,7 +348,11 @@ export default function ByRegion() {
               }}
             >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
+              <XAxis
+                dataKey="year"
+                type="number"
+                domain={["dataMin", "dataMax + 1"]}
+              />
               <YAxis domain={["dataMin - 5", "dataMax + 5"]} />
               <Tooltip />
               <Legend
@@ -366,7 +370,7 @@ export default function ByRegion() {
                   dataKey={region}
                   stroke={lineColors[i % lineColors.length]}
                   strokeWidth={4}
-                  dot={true}
+                  dot={{ r: 10 }}
                   isAnimationActive={true}
                 />
               ))}
@@ -443,7 +447,7 @@ export default function ByRegion() {
                 margin={{ top: 0, right: 0, bottom: 0, left: 72 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" domain={["dataMin - 5", "dataMax + 5"]} />
+                <XAxis type="number" domain={[0, "dataMax + 5"]} />
                 <YAxis
                   dataKey={(entry) =>
                     entry.name === "CSD" ? "City Average (CSD)" : entry.name
@@ -461,7 +465,13 @@ export default function ByRegion() {
                   {barData.map((entry) => (
                     <Cell
                       key={entry.name}
-                      fill={hoverRegion === entry.name ? "#5EA61B" : "#0279b1"}
+                      fill={
+                        entry.name === "CSD"
+                          ? "#FFB100" // 👈 your special color for CSD
+                          : hoverRegion === entry.name
+                          ? "#5EA61B" // 👈 hover color for other bars
+                          : "#0279b1" // 👈 default color
+                      }
                     />
                   ))}
                 </Bar>
