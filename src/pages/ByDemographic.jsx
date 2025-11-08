@@ -129,12 +129,12 @@ export default function ByDemographic() {
         </div>
       </div>
 
-      <div className="flex h-[calc(50vh)] pt-12 px-12">
+      <div className="flex h-[calc(80vh)] pt-12 px-12">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 16, right: 0, bottom: 16, left: 80 }}
+            margin={{ top: 16, right: 0, bottom: 16, left: 120 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" domain={[0, "dataMax + 5"]} />

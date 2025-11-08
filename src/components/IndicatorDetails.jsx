@@ -14,9 +14,9 @@ export default function IndicatorDetails() {
             Meeting our target requires support from:
           </p>
           <div className="flex flex-wrap gap-2 mb-6">
-            <div className="badge bg-[#404040] p-3">Federal government</div>
-            <div className="badge bg-[#404040] p-3">Provincial government</div>
-            <div className="badge bg-[#404040] p-3">
+            <div className="badge bg-[#aca5a5] p-3">Federal government</div>
+            <div className="badge bg-[#aca5a5] p-3">Provincial government</div>
+            <div className="badge bg-[#aca5a5] p-3">
               Regional government and services
             </div>
           </div>
@@ -27,7 +27,7 @@ export default function IndicatorDetails() {
           <p className="text-base mb-3">
             Meeting our target requires support from:
           </p>
-          <button className="btn bg-[#0279B1] text-white">Contact us</button>
+          <button className="btn btn-primary text-white">Contact us</button>
         </div>
 
         {/* RIGHT COLUMN */}
@@ -36,7 +36,7 @@ export default function IndicatorDetails() {
             Sustainable Development Goals
           </h2>
           <p className="text-base mb-2">This indicator aligns with:</p>
-          <div className="badge bg-[#404040] p-3 mb-6">
+          <div className="badge bg-[#aca5a5] p-3 mb-6">
             Sustainable cities and communities
           </div>
 
