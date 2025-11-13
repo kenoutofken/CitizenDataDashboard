@@ -9,31 +9,34 @@ import { NavLink } from "react-router";
 export function Navbar() {
   return (
     <>
-      <div className="border-b-4 mx-12 mt-12 border-primary p-0">
+      <div className="mx-12 mt-12 p-0">
         <div className="flex-none hidden md:block">
-          <ul className="menu menu-horizontal px-0 py-0 my-0">
+          <ul className="menu menu-horizontal grid grid-cols-3 px-0 py-0 my-0">
             <li>
-              <NavLink className="rounded-none" to="/">
-                <button className="btn btn-ghost btn-xl w-80">
-                  <MapIcon className="h-6 w-6 inline-block mr-2" />
-                  By Region
-                </button>
+              <NavLink
+                className="border-b-4 border-primary flex justify-center items-center rounded-none text-lg w-full h-full py-8 px-20"
+                to="/"
+              >
+                <MapIcon className="h-6 w-6 inline-block mr-2" />
+                By Region
               </NavLink>
             </li>
             <li>
-              <NavLink className="rounded-none" to="/demographic">
-                <button className="btn btn-ghost btn-xl w-80">
-                  <UserIcon className="h-6 w-6 inline-block mr-2" />
-                  By Demographic
-                </button>
+              <NavLink
+                className="border-b-4 border-primary flex items-center rounded-none text-lg h-full py-8 px-20"
+                to="/demographic"
+              >
+                <UserIcon className="h-6 w-6 inline-block mr-2" />
+                By Demographic
               </NavLink>
             </li>
             <li>
-              <NavLink className="rounded-none" to="/housing-type">
-                <button className="btn btn-ghost btn-xl w-80">
-                  <MapIcon className="h-6 w-6 inline-block mr-2" />
-                  By Housing Type
-                </button>
+              <NavLink
+                className="border-b-4 border-primary flex items-center rounded-none text-lg h-full py-8 px-20"
+                to="/housing-type"
+              >
+                <UserIcon className="h-6 w-6 inline-block mr-2" />
+                By Housing Type
               </NavLink>
             </li>
           </ul>

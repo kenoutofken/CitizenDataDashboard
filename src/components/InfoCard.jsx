@@ -23,7 +23,7 @@ export default function InfoCard({ dataFile }) {
   return (
     <>
       <section className="mx-12 mb-12">
-        <h1 className="text-5xl font-bold gap-8 pt-12 px-12">
+        <h1 className="text-5xl font-bold gap-8 pt-12">
           Households spending over 30% of income on housing<br></br>
           <span className="text-primary text-xl font-bold">
             {dataFile === "ByDemographicCards.json"
@@ -34,7 +34,7 @@ export default function InfoCard({ dataFile }) {
           </span>
         </h1>
 
-        <div className="grid grid-cols-3 gap-8 py-12 px-12">
+        <div className="grid grid-cols-3 gap-8 py-12">
           {data.map((card) => (
             <div key={card.id} className="card bg-base-100 shadow-md py-8">
               <div className="card-body flex justify-between items-center text-center">

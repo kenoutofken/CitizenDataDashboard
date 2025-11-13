@@ -57,7 +57,7 @@ export default function ByDemographic() {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
+              className="dropdown-content z-50 menu bg-base-100 border-2 rounded mt-1 w-64 text-base shadow-md"
             >
               <li>
                 <button
@@ -109,17 +109,24 @@ export default function ByDemographic() {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content relative z-50 menu bg-base-100 border-2 rounded mt-1 text-base w-64 shadow-md"
+              className="dropdown-content z-50 menu bg-base-100 border-2 rounded mt-1 text-base w-64 shadow-md"
             >
               <li className="menu-title">
-                <span className="text-black font-bold text-base">
+                <span
+                  onClick={() => setSelectedYear("2016")}
+                  className="text-black font-semibold text-base hover:cursor-pointer"
+                >
                   View Data by Year
                 </span>
               </li>
               <li>
                 <button
                   onClick={() => setSelectedYear("2016")}
-                  className="pl-6 hover:bg-primary hover:text-white"
+                  className={
+                    selectedYear === "2016"
+                      ? "pl-6 text-base bg-primary text-white"
+                      : "pl-6 text-base hover:bg-primary hover:text-white"
+                  }
                 >
                   2016 (Latest)
                 </button>

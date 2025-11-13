@@ -31,5 +31,5 @@ html {
 }
 
 a.active {
-  @apply bg-primary relative text-white hover:bg-transparent hover:shadow-none hover:text-white;
+  @apply bg-primary text-white;
 }

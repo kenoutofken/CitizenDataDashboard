@@ -104,7 +104,11 @@ export default function ByHousingType() {
             >
               <li>
                 <button
-                  className="text-black font-bold hover:bg-primary hover:text-white"
+                  className={
+                    selectedYear === "Trending"
+                      ? "text-base font-semibold bg-primary text-white"
+                      : "text-base font-semibold hover:bg-primary hover:text-white"
+                  }
                   onClick={() => setSelectedYear("Trending")}
                 >
                   View Data Trends
@@ -112,7 +116,10 @@ export default function ByHousingType() {
               </li>
 
               <li className="menu-title">
-                <span className="text-black font-bold text-base">
+                <span
+                  onClick={() => setSelectedYear("2016")}
+                  className="text-black font-semibold text-base hover:cursor-pointer"
+                >
                   View Data by Year
                 </span>
               </li>
@@ -121,7 +128,11 @@ export default function ByHousingType() {
                 <li key={year}>
                   <button
                     onClick={() => setSelectedYear(year)}
-                    className="pl-6 text-base hover:bg-primary hover:text-white"
+                    className={
+                      selectedYear === year
+                        ? "pl-6 text-base bg-primary text-white"
+                        : "pl-6 text-base hover:bg-primary hover:text-white"
+                    }
                   >
                     {year}
                   </button>
