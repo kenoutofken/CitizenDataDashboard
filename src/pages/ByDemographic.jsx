@@ -167,7 +167,7 @@ export default function ByDemographic() {
                 <tr key={index}>
                   <td>2016</td>
                   <td>{row.name}</td>
-                  <td>{row.value}</td>
+                  <td>{row.value}%</td>
                 </tr>
               ))}
             </tbody>
