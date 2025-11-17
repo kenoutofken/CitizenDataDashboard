@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "value": "37%",
+    "title": "Card1",
+    "description": "of Vancouver households spend over 30% of income on housing, underscoring that affordability pressures are not limited to specific groups — they’re a city-wide issue impacting residents across ages and backgrounds."
+  },
+  {
+    "id": 2,
+    "value": "44%",
+    "title": "Card2",
+    "description": "of Indigenous households in Vancouver spend more than 30% of their income on housing. This highlights the ongoing inequities in housing affordability for Indigenous residents."
+  },
+  {
+    "id": 3,
+    "value": "4 out of 10",
+    "title": "Card3",
+    "description": "recent immigrant households spend over 30% of their income on housing. This shows how newcomers — often building their lives and careers from scratch — face steep affordability barriers in Vancouver’s housing market."
+  }
+]

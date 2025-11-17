@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, light --prefersdark;
+}
+
+:root {
+  --color-primary: #0279b1;
+  --color-secondary: #5ea61b;
+  --text-base: clamp(14px, 0.7vw, 24px);
+  --text-lg: clamp(22px, 0.9vw, 32px);
+  --text-xl: clamp(26px, 1vw, 36px);
+}
+
+[dark] {
+  --color-base-200: #141414;
+  --color-base-300: #4f3f3f;
+}
+
+/* ✅ Correct font clamp syntax */
+html {
+  font-family: "Montserrat Variable", sans-serif;
+  font-size: clamp(14px, 0.5vw, 20px);
+  @apply bg-base-300;
+}
+
+.recharts-text {
+  font-family: "Montserrat Variable", sans-serif;
+  font-size: clamp(14px, 0.7vw, 24px);
+  font-weight: 500;
+  fill: #333;
+}
+
+a.active {
+  @apply bg-primary text-white;
+}
