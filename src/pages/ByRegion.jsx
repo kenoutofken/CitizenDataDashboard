@@ -237,7 +237,7 @@ export default function ByRegion() {
                         onChange={() => toggleRegion(r)}
                         className="checkbox checkbox-primary"
                       />
-                      <span>{r === "CSD" ? "City Average (CSD)" : r}</span>
+                      <span>{r === "CSD" ? "City Average" : r}</span>
                     </label>
                   ))}
                   <button
@@ -595,10 +595,10 @@ export default function ByRegion() {
                 <XAxis type="number" domain={[0, "dataMax + 5"]} />
                 <YAxis
                   dataKey={(entry) =>
-                    entry.name === "CSD" ? "City Average (CSD)" : entry.name
+                    entry.name === "CSD" ? "City Average" : entry.name
                   }
                   type="category"
-                  width={60}
+                  width={100}
                   tick={{ fontSize: 10 }}
                 />
                 <Tooltip />
