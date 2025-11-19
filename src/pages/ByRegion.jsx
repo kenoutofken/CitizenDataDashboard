@@ -26,7 +26,7 @@ export default function ByRegion() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [regions, setRegions] = useState(["CSD"]);
   const [hoverRegion, setHoverRegion] = useState("CSD");
-  const [showDatasetTable, setShowDatasetTable] = useState(false);//Dataset table
+  const [showDatasetTable, setShowDatasetTable] = useState(false); //Dataset table
   const [raw, setRaw] = useState([]); //For dataset table to save fetched JSON data
 
   useEffect(() => {
@@ -207,8 +207,8 @@ export default function ByRegion() {
           {showDatasetTable
             ? "Displaying Data Collected between 1996 - 2016"
             : isTrending
-              ? "Displaying Data Collected between 1996 - 2016"
-              : `Displaying Data Collected in ${selectedYear}`}
+            ? "Displaying Data Collected between 1996 - 2016"
+            : `Displaying Data Collected in ${selectedYear}`}
         </span>
         <div className="flex gap-4">
           {isTrending && (
@@ -274,7 +274,9 @@ export default function ByRegion() {
                             )
                           )
                         : setBarData((data) =>
-                            [...data].sort((a, b) => a.name.localeCompare(b.name))
+                            [...data].sort((a, b) =>
+                              a.name.localeCompare(b.name)
+                            )
                           )
                     }
                     className="pl-6 hover:bg-primary hover:text-white"
@@ -288,7 +290,9 @@ export default function ByRegion() {
                     onClick={() =>
                       showDatasetTable
                         ? setRaw((data) =>
-                            [...data].sort((a, b) => b.actualvalue - a.actualvalue)
+                            [...data].sort(
+                              (a, b) => b.actualvalue - a.actualvalue
+                            )
                           )
                         : setBarData((data) =>
                             [...data].sort((a, b) => b.value - a.value)
@@ -305,7 +309,9 @@ export default function ByRegion() {
                     onClick={() =>
                       showDatasetTable
                         ? setRaw((data) =>
-                            [...data].sort((a, b) => a.actualvalue - b.actualvalue)
+                            [...data].sort(
+                              (a, b) => a.actualvalue - b.actualvalue
+                            )
                           )
                         : setBarData((data) =>
                             [...data].sort((a, b) => a.value - b.value)
@@ -316,7 +322,6 @@ export default function ByRegion() {
                     Lowest to Highest
                   </button>
                 </li>
-
               </ul>
               <div className="toast toast-end" id="toast-container"></div>
             </div>
@@ -359,6 +364,7 @@ export default function ByRegion() {
                   }
                   onClick={() => {
                     setShowDatasetTable(true);
+                    setSelectedYear("Table View");
                   }}
                 >
                   View Dataset Table
@@ -399,7 +405,6 @@ export default function ByRegion() {
         </div>
       </div>
 
-
       {showDatasetTable ? (
         <div className="pt-12 px-12 overflow-x-auto">
           <div className="max-h-[400px] overflow-y-auto border border-gray-300 rounded-md">
@@ -422,7 +427,8 @@ export default function ByRegion() {
                       <td>
                         {typeof d.actualvalue === "number"
                           ? d.actualvalue
-                          : parseInt(d.actualvalue)}%
+                          : parseInt(d.actualvalue)}
+                        %
                       </td>
                     </tr>
                   ))}

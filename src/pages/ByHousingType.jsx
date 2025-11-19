@@ -21,7 +21,7 @@ export default function ByHousingType() {
   const [trendData, setTrendData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
   const isTrending = selectedYear === "Trending";
-  const [showDatasetTable, setShowDatasetTable] = useState(false);//Dataset table
+  const [showDatasetTable, setShowDatasetTable] = useState(false); //Dataset table
 
   useEffect(() => {
     fetch("data/ByHousingType.json")
@@ -121,8 +121,15 @@ export default function ByHousingType() {
 
               <li>
                 <button
-                  className="text-black font-semibold hover:bg-primary hover:text-white"
-                  onClick={() => setShowDatasetTable(true)}
+                  className={
+                    showDatasetTable
+                      ? "text-base font-semibold bg-primary text-white"
+                      : "text-base font-semibold hover:bg-primary hover:text-white"
+                  }
+                  onClick={() => {
+                    setShowDatasetTable(true);
+                    setSelectedYear("Table View");
+                  }}
                 >
                   View Dataset Table
                 </button>

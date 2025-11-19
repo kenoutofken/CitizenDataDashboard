@@ -114,13 +114,19 @@ export default function ByDemographic() {
             >
               <li>
                 <button
-                  className="text-black font-semibold hover:bg-primary hover:text-white"
-                  onClick={() => setShowDatasetTable(true)}
+                  className={
+                    showDatasetTable
+                      ? "text-base font-semibold bg-primary text-white"
+                      : "text-base font-semibold hover:bg-primary hover:text-white"
+                  }
+                  onClick={() => {
+                    setShowDatasetTable(true);
+                    setSelectedYear("Table View");
+                  }}
                 >
                   View Dataset Table
                 </button>
               </li>
-
               <li className="menu-title">
                 <span
                   onClick={() => {
@@ -174,33 +180,33 @@ export default function ByDemographic() {
           </table>
         </div>
       ) : (
-      <div className="flex h-[calc(80vh)] pt-12 px-12">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data}
-            layout="vertical"
-            margin={{ top: 16, right: 0, bottom: 16, left: 120 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" domain={[0, "dataMax + 5"]} />
-            <YAxis
-              dataKey="name"
-              type="category"
-              width={240}
-              tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
-            />
-            <Tooltip />
-            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-              {data.map((entry) => (
-                <Cell
-                  key={entry.name}
-                  fill={entry.name === "City Average" ? "#FFB100" : "#0279b1"}
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+        <div className="flex h-[calc(80vh)] pt-12 px-12">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              layout="vertical"
+              margin={{ top: 16, right: 0, bottom: 16, left: 120 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" domain={[0, "dataMax + 5"]} />
+              <YAxis
+                dataKey="name"
+                type="category"
+                width={240}
+                tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
+              />
+              <Tooltip />
+              <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                {data.map((entry) => (
+                  <Cell
+                    key={entry.name}
+                    fill={entry.name === "City Average" ? "#FFB100" : "#0279b1"}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       )}
     </>
   );
