@@ -406,7 +406,7 @@ export default function ByRegion() {
                     setSelectedYear("2016");
                     setShowDatasetTable(false);
                   }}
-                  className="text-black text-base font-bold hover:bg-primary hover:text-white hover:cursor-pointer"
+                  className="text-black text-base font-semibold hover:bg-primary hover:text-white hover:cursor-pointer"
                 >
                   View Data by Year
                 </span>
