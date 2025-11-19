@@ -14,6 +14,7 @@ import InfoCard from "../components/InfoCard.jsx";
 export default function ByDemographic() {
   const [data, setData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
+  const [sortOrder, setSortOrder] = useState("alphabetical");
 
   useEffect(() => {
     fetch("data/ByDemographic.json")
@@ -61,36 +62,51 @@ export default function ByDemographic() {
             >
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => a.name.localeCompare(b.name))
-                    )
+                    );
+                    setSortOrder("alphabetical");
+                  }}
+                  className={
+                    sortOrder === "alphabetical"
+                      ? "pl-6 font-semibold bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   A to Z
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => b.value - a.value)
-                    )
+                    );
+                    setSortOrder("highest");
+                  }}
+                  className={
+                    sortOrder === "highest"
+                      ? "pl-6 font-semibold bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   Highest to Lowest
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => a.value - b.value)
-                    )
+                    );
+                    setSortOrder("lowest");
+                  }}
+                  className={
+                    sortOrder === "lowest"
+                      ? "pl-6 font-semibold bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   Lowest to Highest
                 </button>

@@ -26,6 +26,7 @@ export default function ByRegion() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [regions, setRegions] = useState(["CSD"]);
   const [hoverRegion, setHoverRegion] = useState("CSD");
+  const [sortOrder, setSortOrder] = useState("alphabetical");
 
   useEffect(() => {
     if (!geoRef.current || !geoData?.features?.length) return;
@@ -261,36 +262,51 @@ export default function ByRegion() {
               >
                 <li>
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      setSortOrder("alphabetical");
                       setBarData((data) =>
                         [...data].sort((a, b) => a.name.localeCompare(b.name))
-                      )
+                      );
+                    }}
+                    className={
+                      sortOrder === "alphabetical"
+                        ? "pl-6 font-semibold bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
                   >
                     A to Z
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      setSortOrder("highest");
                       setBarData((data) =>
                         [...data].sort((a, b) => b.value - a.value)
-                      )
+                      );
+                    }}
+                    className={
+                      sortOrder === "highest"
+                        ? "pl-6 font-semibold bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
                   >
                     Highest to Lowest
                   </button>
                 </li>
                 <li>
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      setSortOrder("lowest");
                       setBarData((data) =>
                         [...data].sort((a, b) => a.value - b.value)
-                      )
+                      );
+                    }}
+                    className={
+                      sortOrder === "lowest"
+                        ? "pl-6 font-semibold bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
                   >
                     Lowest to Highest
                   </button>
@@ -299,8 +315,7 @@ export default function ByRegion() {
               <div className="toast toast-end" id="toast-container"></div>
             </div>
           )}
-
-          <div className="dropdown dropdown-end dropdown-bottomm">
+          <div className="dropdown dropdown-end dropdown-bottom">
             <div
               tabIndex={0}
               role="button"
@@ -476,7 +491,7 @@ export default function ByRegion() {
               <BarChart
                 data={barData}
                 layout="vertical"
-                margin={{ top: 0, right: 0, bottom: 0, left: 144 }}
+                margin={{ top: 0, right: 0, bottom: 0, left: 60 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" domain={[0, "dataMax + 5"]} />
@@ -485,7 +500,7 @@ export default function ByRegion() {
                     entry.name === "CSD" ? "City Average (CSD)" : entry.name
                   }
                   type="category"
-                  width={180}
+                  width={150}
                   tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
                 />
                 <Tooltip />
