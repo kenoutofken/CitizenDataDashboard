@@ -28,6 +28,7 @@ export default function ByRegion() {
   const [hoverRegion, setHoverRegion] = useState("CSD");
   const [showDatasetTable, setShowDatasetTable] = useState(false); //Dataset table
   const [raw, setRaw] = useState([]); //For dataset table to save fetched JSON data
+  const [sortedBy, setSortedBy] = useState("AtoZ");
 
   useEffect(() => {
     if (!geoRef.current || !geoData?.features?.length) return;
@@ -268,18 +269,26 @@ export default function ByRegion() {
                   <button
                     onClick={() =>
                       showDatasetTable
-                        ? setRaw((data) =>
-                            [...data].sort((a, b) =>
+                        ? setRaw((data) => {
+                            const sorted = [...data].sort((a, b) =>
                               a.geographyname.localeCompare(b.geographyname)
-                            )
-                          )
-                        : setBarData((data) =>
-                            [...data].sort((a, b) =>
+                            );
+                            setSortedBy("AtoZ");
+                            return sorted;
+                          })
+                        : setBarData((data) => {
+                            const sorted = [...data].sort((a, b) =>
                               a.name.localeCompare(b.name)
-                            )
-                          )
+                            );
+                            setSortedBy("AtoZ");
+                            return sorted;
+                          })
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
+                    className={
+                      sortedBy === "AtoZ"
+                        ? "pl-6 bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
+                    }
                   >
                     A to Z
                   </button>
@@ -289,16 +298,26 @@ export default function ByRegion() {
                   <button
                     onClick={() =>
                       showDatasetTable
-                        ? setRaw((data) =>
-                            [...data].sort(
+                        ? setRaw((data) => {
+                            const sorted = [...data].sort(
                               (a, b) => b.actualvalue - a.actualvalue
-                            )
-                          )
-                        : setBarData((data) =>
-                            [...data].sort((a, b) => b.value - a.value)
-                          )
+                            );
+                            setSortedBy("HighLow");
+                            return sorted;
+                          })
+                        : setBarData((data) => {
+                            const sorted = [...data].sort(
+                              (a, b) => b.value - a.value
+                            );
+                            setSortedBy("HighLow");
+                            return sorted;
+                          })
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
+                    className={
+                      sortedBy === "HighLow"
+                        ? "pl-6 bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
+                    }
                   >
                     Highest to Lowest
                   </button>
@@ -308,16 +327,26 @@ export default function ByRegion() {
                   <button
                     onClick={() =>
                       showDatasetTable
-                        ? setRaw((data) =>
-                            [...data].sort(
+                        ? setRaw((data) => {
+                            const sorted = [...data].sort(
                               (a, b) => a.actualvalue - b.actualvalue
-                            )
-                          )
-                        : setBarData((data) =>
-                            [...data].sort((a, b) => a.value - b.value)
-                          )
+                            );
+                            setSortedBy("LowHigh"); // optional, for active-state styling
+                            return sorted;
+                          })
+                        : setBarData((data) => {
+                            const sorted = [...data].sort(
+                              (a, b) => a.value - b.value
+                            );
+                            setSortedBy("LowHigh");
+                            return sorted;
+                          })
                     }
-                    className="pl-6 hover:bg-primary hover:text-white"
+                    className={
+                      sortedBy === "LowHigh"
+                        ? "pl-6 bg-primary text-white"
+                        : "pl-6 hover:bg-primary hover:text-white"
+                    }
                   >
                     Lowest to Highest
                   </button>

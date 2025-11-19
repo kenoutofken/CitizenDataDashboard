@@ -15,6 +15,7 @@ export default function ByDemographic() {
   const [data, setData] = useState([]);
   const [selectedYear, setSelectedYear] = useState("2016");
   const [showDatasetTable, setShowDatasetTable] = useState(false);
+  const [sortedBy, setSortedBy] = useState("AtoZ");
 
   useEffect(() => {
     fetch("data/ByDemographic.json")
@@ -62,36 +63,51 @@ export default function ByDemographic() {
             >
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => a.name.localeCompare(b.name))
-                    )
+                    );
+                    setSortedBy("AtoZ");
+                  }}
+                  className={
+                    sortedBy === "AtoZ"
+                      ? "pl-6 bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   A to Z
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => b.value - a.value)
-                    )
+                    );
+                    setSortedBy("HighToLow");
+                  }}
+                  className={
+                    sortedBy === "HighToLow"
+                      ? "pl-6 bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   Highest to Lowest
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setData((data) =>
                       [...data].sort((a, b) => a.value - b.value)
-                    )
+                    );
+                    setSortedBy("LowToHigh");
+                  }}
+                  className={
+                    sortedBy === "LowToHigh"
+                      ? "pl-6 bg-primary text-white"
+                      : "pl-6 hover:bg-primary hover:text-white"
                   }
-                  className="pl-6 hover:bg-primary hover:text-white"
                 >
                   Lowest to Highest
                 </button>

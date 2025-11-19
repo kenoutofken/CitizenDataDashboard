@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import "@fontsource-variable/montserrat";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename="/citizendatadashboard/">
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 );

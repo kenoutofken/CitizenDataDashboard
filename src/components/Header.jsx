@@ -13,7 +13,7 @@ export function Header() {
         <Bars3Icon className="h-8 w-8 text-white md:hidden" />
         <div className="flex justify-start">
           <img
-            src="images/logo.png"
+            src="/images/logo.png"
             alt="Vancouver Healthy City Dashboard"
             className="h-16"
           />
