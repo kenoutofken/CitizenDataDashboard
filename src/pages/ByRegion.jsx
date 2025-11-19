@@ -598,8 +598,8 @@ export default function ByRegion() {
                     entry.name === "CSD" ? "City Average (CSD)" : entry.name
                   }
                   type="category"
-                  width={180}
-                  tick={{ fontSize: "clamp(16px, 0.8rem + 0.5vw, 0.85rem)" }}
+                  width={60}
+                  tick={{ fontSize: 10 }}
                 />
                 <Tooltip />
                 <Bar
