@@ -1,5 +1,4 @@
-
-# CITIZEN DATA DASHBOARD - A03 - FUNCTIONAL CODE
+# CITIZEN DATA DASHBOARD - A04 - INTEGRATED CODE
 
 By Ken Yau & Raizel Bacani
 
@@ -14,8 +13,9 @@ Our main goal for this assignment is to create an interface for users to navigat
 - Leaflet
 - Daisy UI
 
-The files contained within this project reflect our first iteration of the coded solution. Because this project is created in React, a few requirements and dependencies are needed in order to view the project on a local development server. Instructions on how to download these dependencies is detailed in the next section. Our project has also been uploaded online for testing and viewing at www.designedbyken.com/citizendatadashboard/.
+The files contained within this folder represent the completed development of this project. Because this project is created in React, a few requirements and dependencies are needed in order to view the project on a local development server. Instructions on how to download these dependencies is detailed in the next section. Our project has also been uploaded online for testing and viewing at citizen-data-dashboard.vercel.app.
 
+This project focused on the organization, navigation, and visual representation of the data provided by the City of Vancouver. Other elements, such as a header and links to different pages (like related indicators) are created to act as visual representation only, as that falls outside the scope of this redesign.
 
 ## INSTRUCTIONS TO VIEW LOCALLY
 
@@ -27,13 +27,13 @@ As noted before, in order to view the included files locally, they need to be ru
 4. Start the server by entering the command 'npm run dev'
 5. Open the server locally using the provided localhost link
 
-
 ### LIMITATIONS
 
-The functional code does not reflect the complete design from the final prototype. The header and footer sections from the existing webpage of the Citizen Data Dashboard are not integrated in this version.
-
+- The data from this project was downloaded from Vancouver's Open Data site in November, 2025. Because this data is not drawn live off an API, the data may not represent the latest dataset available.
+- On the top of the interface, a header was created to visually represent the existing Vancouver Healthy City Dashboard. The links are not functional, and this header is only provided as a visual representation for how our interface can work seamlessly within the existing site as an upgrade to the functionality and organiation to the current site.
+- Similarly, the links at the bottom of the page are taken directly off of the existing site. They do not link to the original content, and are provided for visual representation purposes only.
 
 #### ONLINE ACCESS
 
-www.designedbyken.com/citizendatadashboard
+citizen-data-dashboard.vercel.app
 github.com/kenoutofken/CitizenDataDashboard
